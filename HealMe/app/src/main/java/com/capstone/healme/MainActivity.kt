@@ -1,6 +1,7 @@
 package com.capstone.healme
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -29,6 +30,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
+
+        navController.addOnDestinationChangedListener {_, destination,_ ->
+            if (destination.id == R.id.loginFragment) {
+                navView.visibility = View.GONE
+                supportActionBar?.hide()
+            }
+
+        }
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
