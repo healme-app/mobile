@@ -23,22 +23,24 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
 
-        navController.addOnDestinationChangedListener {_, destination,_ ->
-            if (destination.id == R.id.loginFragment) {
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.loginFragment || destination.id == R.id.registerFragment) {
                 navView.visibility = View.GONE
                 supportActionBar?.hide()
+            } else {
+                navView.visibility = View.VISIBLE
+                supportActionBar?.show()
             }
 
         }
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
     }
 }

@@ -7,8 +7,16 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
+    <string name="password_confirmation">Confirm Password</string>
     <string name="login">Login</string>
+    <string name="login_underline"><u>Login</u></string>
     <string name="no_account_text">Don\'t have an account yet?</string>
+    <string name="have_account_text">Already have an account?</string>
     <string name="signup">Sign Up</string>
     <string name="signup_underline"><u>Sign Up</u></string>
+    <string name="signup_desc">Create an account!</string>
+    <string name="name">Name</string>
+    <string name="field_not_filled">Please fill all the fields first!</string>
+    <string name="password_not_match">Password do not match!</string>
+    
 </resources>

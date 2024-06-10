@@ -1,5 +1,6 @@
 package com.capstone.healme.data.remote.retrofit
 
+import com.capstone.healme.BuildConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -15,6 +16,7 @@ class ApiConfig {
                 val req = chain.request()
                 val requestBuilder = req.newBuilder()
                 val token = runBlocking { tokenFlow.first() }
+                requestBuilder.addHeader("Content-Type", "application/json")
                 requestBuilder.addHeader("Authorization", "Bearer $token")
                 val requestHeaders = requestBuilder.build()
                 chain.proceed(requestHeaders)
@@ -23,7 +25,7 @@ class ApiConfig {
                 .addInterceptor(authInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl("BuildConfig.BASE_URL")
+                .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
