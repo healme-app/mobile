@@ -13,6 +13,8 @@ import androidx.transition.TransitionInflater
 import com.capstone.healme.R
 import com.capstone.healme.ViewModelFactory
 import com.capstone.healme.databinding.FragmentLoginBinding
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
@@ -46,7 +48,9 @@ class LoginFragment : Fragment() {
     private fun setupAction() {
         binding.apply {
             btnLogin.setOnClickListener {
-                loginUser()
+                val email = edLoginEmail.text.toString()
+                val password = edLoginPassword.text.toString()
+                loginUser(email, password)
             }
 
             btnNavigateSignup.setOnClickListener {
@@ -65,7 +69,11 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun loginUser() {
+    private fun loginUser(email: String, password: String) {
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+                val emailBody = email.toRequestBody("text/plain".toMediaType())
+                val passwordBody = password.toRequestBody("text/plain".toMediaType())
+        }
         findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
     }
 

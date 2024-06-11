@@ -2,8 +2,10 @@
     <string name="app_name">HealMe</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_history">History</string>
+    <string name="title_settings">Settings</string>
     <string name="login_desc">Please enter your credentials to log in</string>
+    <string name="title_scan">Scan wound</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
@@ -18,5 +20,16 @@
     <string name="name">Name</string>
     <string name="field_not_filled">Please fill all the fields first!</string>
     <string name="password_not_match">Password do not match!</string>
-    
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_scan_wound">Scan your wound</string>
+    <string name="brief_instruction">Brief instructions:\n1. Ensure good lightning\n2.Ensure the image is not blur\n3.Make sure the wound is in focus\n4.Avoid obstruction</string>
+    <string name="image_chooser">Choose where to get your wound image from</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+    <string name="content_desc_image">preview image</string>
+    <string name="button_scan">Scan now!</string>
+    <string name="button_change_image">Select another image</string>
+    <string name="no_image_selected">No image selected</string>
+
 </resources>

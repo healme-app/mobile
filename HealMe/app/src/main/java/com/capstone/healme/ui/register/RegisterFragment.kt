@@ -1,6 +1,7 @@
 package com.capstone.healme.ui.register
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,9 @@ import androidx.transition.TransitionInflater
 import com.capstone.healme.R
 import com.capstone.healme.ViewModelFactory
 import com.capstone.healme.databinding.FragmentRegisterBinding
+import com.capstone.healme.extension.showToast
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class RegisterFragment : Fragment() {
 
@@ -81,18 +85,16 @@ class RegisterFragment : Fragment() {
     ) {
         if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && passwordConfirmation.isNotEmpty()) {
             if (password == passwordConfirmation) {
-                registerViewModel.registerUser(name, email, password)
+                val nameBody = name.toRequestBody("text/plain".toMediaType())
+                val emailBody = email.toRequestBody("text/plain".toMediaType())
+                val passwordBody = password.toRequestBody("text/plain".toMediaType())
+                registerViewModel.registerUser(nameBody, emailBody, passwordBody)
             } else {
-                showToast(resources.getString(R.string.password_not_match))
+                showToast(resources.getString(R.string.password_not_match), false)
             }
         } else {
-            showToast(resources.getString(R.string.field_not_filled))
+            showToast(resources.getString(R.string.field_not_filled), false)
         }
-
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupViewModel() {
@@ -104,8 +106,9 @@ class RegisterFragment : Fragment() {
         registerViewModel = viewModel
 
         registerViewModel.registerResponse.observe(viewLifecycleOwner) {
-            if (it.error == true) {
-                showToast(it.message.toString())
+            if (it.userId?.isNotEmpty() == true) {
+                showToast("Successfully create account!", true)
+                binding.btnNavigateLogin.performClick()
             }
         }
     }

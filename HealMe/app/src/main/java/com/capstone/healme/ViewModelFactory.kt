@@ -7,6 +7,7 @@ import com.capstone.healme.data.UserRepository
 import com.capstone.healme.di.Injection
 import com.capstone.healme.ui.login.LoginViewModel
 import com.capstone.healme.ui.register.RegisterViewModel
+import com.capstone.healme.ui.scan.ScanViewModel
 
 class ViewModelFactory(private val userRepository: UserRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -16,6 +17,8 @@ class ViewModelFactory(private val userRepository: UserRepository) :
             return LoginViewModel(userRepository) as T
         } else if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
             return RegisterViewModel(userRepository) as T
+        } else if (modelClass.isAssignableFrom(ScanViewModel::class.java)) {
+            return ScanViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

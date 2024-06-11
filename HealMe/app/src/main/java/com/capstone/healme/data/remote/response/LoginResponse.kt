@@ -5,10 +5,11 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 @Parcelize
-data class PostResponse(
-	@field:SerializedName("error")
-	val error: Boolean? = null,
+data class LoginResponse(
 
-	@field:SerializedName("message")
-	val message: String? = null
+	@field:SerializedName("userId")
+	val userId: String? = null,
+
+	@field:SerializedName("token")
+	val token: String? = null
 ) : Parcelable

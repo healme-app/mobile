@@ -6,4 +6,5 @@
     <color name="aqua_80">#CC14967F</color>
     <color name="black">#FF000000</color>
     <color name="white">#F4F8FA</color>
+    <color name="transparent_light_grey">#20000000</color>
 </resources>

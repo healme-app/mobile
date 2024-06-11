@@ -4,15 +4,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.healme.data.UserRepository
-import com.capstone.healme.data.remote.response.PostResponse
+import com.capstone.healme.data.remote.response.RegisterResponse
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
 
-class RegisterViewModel(private val userRepository: UserRepository): ViewModel() {
-    private var _registerResponse = MutableLiveData<PostResponse>()
+class RegisterViewModel(private val userRepository: UserRepository) : ViewModel() {
+    private var _registerResponse = MutableLiveData<RegisterResponse>()
     val registerResponse = _registerResponse
-    fun registerUser(name: String, email: String, password: String) {
+    fun registerUser(name: RequestBody, email: RequestBody, password: RequestBody) {
         viewModelScope.launch {
-            _registerResponse.value = userRepository.registerUser(name, email,password)
+            _registerResponse.value = userRepository.registerUser(name, email, password)
         }
     }
 }
