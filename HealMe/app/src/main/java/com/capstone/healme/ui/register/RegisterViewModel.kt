@@ -11,9 +11,16 @@ import okhttp3.RequestBody
 class RegisterViewModel(private val userRepository: UserRepository) : ViewModel() {
     private var _registerResponse = MutableLiveData<RegisterResponse>()
     val registerResponse = _registerResponse
-    fun registerUser(name: RequestBody, email: RequestBody, password: RequestBody) {
+    fun registerUser(
+        name: RequestBody,
+        birthDate: RequestBody,
+        gender: RequestBody,
+        weight: RequestBody,
+        email: RequestBody,
+        password: RequestBody
+    ) {
         viewModelScope.launch {
-            _registerResponse.value = userRepository.registerUser(name, email, password)
+            _registerResponse.value = userRepository.registerUser(name, birthDate, gender, weight, email, password)
         }
     }
 }

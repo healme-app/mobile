@@ -8,6 +8,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class ApiConfig {
     companion object {
@@ -16,18 +17,25 @@ class ApiConfig {
                 val req = chain.request()
                 val requestBuilder = req.newBuilder()
                 val token = runBlocking { tokenFlow.first() }
-                requestBuilder.addHeader("Content-Type", "application/json")
                 requestBuilder.addHeader("Authorization", "Bearer $token")
                 val requestHeaders = requestBuilder.build()
                 chain.proceed(requestHeaders)
             }
-            val client = OkHttpClient.Builder()
+
+            val okHttpClient = OkHttpClient.Builder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
                 .addInterceptor(authInterceptor)
+                .retryOnConnectionFailure(true)
                 .build()
+//            val client = OkHttpClient.Builder()
+//                .addInterceptor(authInterceptor)
+//                .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
+                .client(okHttpClient)
                 .build()
             return retrofit.create(ApiService::class.java)
         }

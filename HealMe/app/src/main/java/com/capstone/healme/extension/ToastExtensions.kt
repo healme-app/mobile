@@ -12,7 +12,6 @@ fun Context.showToast(message: String, isShort: Boolean) {
     }
 }
 
-// Extension function for Fragment to show a toast message
 fun Fragment.showToast(message: String, isShort: Boolean) {
     if (isShort) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()

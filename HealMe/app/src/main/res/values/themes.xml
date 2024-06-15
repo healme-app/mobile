@@ -9,12 +9,16 @@
         <item name="colorSecondaryVariant">@color/aqua_80</item>
         <item name="colorOnSecondary">@color/white</item>
 
+        <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="colorControlHighlight">?attr/colorPrimary</item>
+
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
     
     <style name="NormalButton">
-        <item name="backgroundTint">@null</item>
+        <item name="backgroundTint">?attr/colorSecondary</item>
         <item name="android:background">@drawable/rounded_button_background</item>
+        <item name="android:backgroundTint">?attr/colorSecondary</item>
         <item name="android:textColor">?attr/colorOnSecondary</item>
         <item name="android:fontFamily">@font/lexend_deca</item>
         <item name="android:textSize">16sp</item>
@@ -48,7 +52,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="ClickableText">
+    <style name="InvisibleButton">
         <item name="backgroundTint">@null</item>
         <item name="background">@null</item>
         <item name="android:background">@android:color/transparent</item>
@@ -58,5 +62,13 @@
         <item name="android:textColor">?attr/colorSecondary</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="clickableText">
+        <item name="android:fontFamily">@font/lexend_deca</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
     </style>
 </resources>

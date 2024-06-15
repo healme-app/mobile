@@ -16,11 +16,13 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "us
 class UserPreferences private constructor(private val dataStore: DataStore<Preferences>){
     private val isLogin = booleanPreferencesKey("is_login")
     private val userToken = stringPreferencesKey("user_token")
+    private val userId = stringPreferencesKey("user_id")
 
-    suspend fun setUserLogin(token: String) {
+    suspend fun setUserLogin(token: String, id: String) {
         dataStore.edit { preferences ->
             preferences[isLogin] = true
             preferences[userToken] = token
+            preferences[userId] = id
         }
     }
 
@@ -28,6 +30,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         dataStore.edit { preferences ->
             preferences[isLogin] = false
             preferences[userToken] = ""
+            preferences[userId] = ""
         }
     }
 
@@ -40,6 +43,12 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
     fun getUserToken(): Flow<String> {
         return dataStore.data.map { preferences ->
             preferences[userToken] ?: ""
+        }
+    }
+
+    fun getUserId(): Flow<String> {
+        return dataStore.data.map { preferences->
+            preferences[userId] ?: ""
         }
     }
 

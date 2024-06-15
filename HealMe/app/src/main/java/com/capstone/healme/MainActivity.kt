@@ -1,7 +1,9 @@
 package com.capstone.healme
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -16,12 +18,22 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val factory = ViewModelFactory.getInstance(this)
+        val viewModel: MainViewModel by viewModels {
+            factory
+        }
+
+        mainViewModel = viewModel
 
         val navView: BottomNavigationView = binding.navView
         val bottomAppBar = binding.bottomAppBar
@@ -32,19 +44,28 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home,
-                R.id.navigation_dashboard,
-                R.id.navigation_notifications,
-                R.id.navigation_settings
+                R.id.HomeFragment,
+                R.id.HealthcareFragment,
+                R.id.HistoryFragment,
+                R.id.ProfileFragment
             )
         )
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        mainViewModel.checkUserState().observe(this) {
+            val navGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
+            if (it) {
+                navGraph.setStartDestination(R.id.HomeFragment)
+            } else {
+                navGraph.setStartDestination(R.id.loginFragment)
+            }
+            navController.graph = navGraph
+            setupActionBarWithNavController(navController, appBarConfiguration)
+            navView.setupWithNavController(navController)
+        }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginFragment, R.id.registerFragment -> {
+                R.id.loginFragment, R.id.registerFragment, R.id.resultFragment -> {
                     bottomAppBar.gone()
                     fab.gone()
                     supportActionBar?.hide()

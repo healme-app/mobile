@@ -19,6 +19,8 @@ class ViewModelFactory(private val userRepository: UserRepository) :
             return RegisterViewModel(userRepository) as T
         } else if (modelClass.isAssignableFrom(ScanViewModel::class.java)) {
             return ScanViewModel(userRepository) as T
+        } else if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+            return MainViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

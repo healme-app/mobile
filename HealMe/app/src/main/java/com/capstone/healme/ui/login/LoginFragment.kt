@@ -1,6 +1,7 @@
 package com.capstone.healme.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.transition.TransitionInflater
 import com.capstone.healme.R
 import com.capstone.healme.ViewModelFactory
 import com.capstone.healme.databinding.FragmentLoginBinding
+import com.capstone.healme.extension.showToast
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 
@@ -73,8 +75,8 @@ class LoginFragment : Fragment() {
         if (email.isNotEmpty() && password.isNotEmpty()) {
                 val emailBody = email.toRequestBody("text/plain".toMediaType())
                 val passwordBody = password.toRequestBody("text/plain".toMediaType())
+                loginViewModel.login(emailBody, passwordBody)
         }
-        findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
     }
 
     private fun setupViewModel() {
@@ -84,5 +86,18 @@ class LoginFragment : Fragment() {
         }
 
         loginViewModel = viewModel
+
+        loginViewModel.loginResponse.observe(viewLifecycleOwner) {
+            if (it.error == null) {
+                showToast(it.message!!, false)
+            } else {
+                val token = it.loginResult?.token!!
+                Log.d("token API", token)
+                val id = it.loginResult.userId!!
+                loginViewModel.setUserLogin(token, id)
+                showToast("Successfully login", false)
+                findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
+            }
+        }
     }
 }

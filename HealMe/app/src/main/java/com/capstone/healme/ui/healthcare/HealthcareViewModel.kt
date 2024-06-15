@@ -1,10 +1,10 @@
-package com.capstone.healme.ui.dashboard
+package com.capstone.healme.ui.healthcare
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class HealthcareViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is dashboard Fragment"

@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <TextView
             style="@style/TitleText"
@@ -70,7 +70,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_preview_selected_image"

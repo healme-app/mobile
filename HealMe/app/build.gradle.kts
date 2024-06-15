@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -16,7 +17,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"http://35.197.153.86\"")
+        buildConfigField("String", "BASE_URL", "\"http://34.101.113.145:3000/\"")
     }
 
     buildTypes {
@@ -62,4 +63,12 @@ dependencies {
 
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    implementation(libs.play.services.maps.v1802)
+    implementation(libs.places)
+    implementation(libs.play.services.location)
 }

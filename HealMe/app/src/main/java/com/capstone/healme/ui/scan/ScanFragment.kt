@@ -2,6 +2,7 @@ package com.capstone.healme.ui.scan
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,18 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.capstone.healme.R
 import com.capstone.healme.ViewModelFactory
 import com.capstone.healme.databinding.FragmentScanBinding
 import com.capstone.healme.extension.gone
 import com.capstone.healme.extension.showToast
 import com.capstone.healme.extension.visible
+import com.capstone.healme.helper.reduceFileImage
+import com.capstone.healme.helper.uriToFile
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 
 class ScanFragment : Fragment() {
     private var _binding: FragmentScanBinding? = null
@@ -56,6 +63,11 @@ class ScanFragment : Fragment() {
         }
 
         scanViewModel = viewModel
+
+        scanViewModel.scanResponse.observe(viewLifecycleOwner) {scanResponse ->
+            Log.d("imageUrl", scanResponse.resultDb?.imageUrl.toString())
+            Log.d("Error message", scanResponse.message.toString())
+        }
     }
 
     private fun setupAction() {
@@ -68,6 +80,21 @@ class ScanFragment : Fragment() {
                 currentImageUri = null
                 changeContainer()
             }
+
+            btnScan.setOnClickListener {
+                scanImage()
+            }
+        }
+    }
+
+    private fun scanImage() {
+        currentImageUri?.let { uri ->
+            val imageFile = uriToFile(uri, requireContext()).reduceFileImage()
+            val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+            val multipartBody = MultipartBody.Part.createFormData(
+                "image", imageFile.name, requestImageFile
+            )
+            scanViewModel.scanImage(multipartBody)
         }
     }
 

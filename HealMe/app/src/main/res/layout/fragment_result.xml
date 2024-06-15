@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    tools:context=".ui.result.ResultFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Result"
+            android:textAlignment="center"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:id="@+id/iv_wound"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleType="fitXY"
+                tools:src="@tools:sample/avatars"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/NormalText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="Wound Type :" />
+
+                <TextView
+                    android:id="@+id/tv_wound_type"
+                    style="@style/subTitleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Burn"
+                    android:textStyle="bold" />
+
+                <TextView
+                    style="@style/NormalText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="Confidence Score :" />
+
+                <TextView
+                    android:id="@+id/tv_confidence_score"
+                    style="@style/subTitleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="88%"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                style="@style/TitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Explanation" />
+
+            <TextView
+                android:id="@+id/tv_explanation"
+                style="@style/NormalText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="A burn is an injury to the skin caused by heat, chemicals, electricity, or radiation. It can range from minor (redness and pain) to severe (deep tissue damage)" />
+
+            <TextView
+                android:id="@+id/toggle_text_view_explanation"
+                style="@style/clickableText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/read_more" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                style="@style/TitleText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="First-aid recommendation" />
+
+            <TextView
+                android:id="@+id/tv_first_aid"
+                style="@style/NormalText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="Minor Burns:\n
+Cool the burn with cool water for 10-15 minutes and cover with a sterile bandage.\n
+
+Severe Burns:\n
+Call emergency services, do not remove stuck clothing, and cover with a moist, sterile cloth" />
+
+            <TextView
+                android:id="@+id/toggle_text_view_first_aid"
+                style="@style/clickableText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/read_more" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_back"
+            style="@style/NormalButton"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:layout_gravity="center"
+            android:layout_marginTop="64dp"
+            android:layout_marginBottom="16dp"/>
+        <Button
+            android:id="@+id/btn_healthcare"
+            style="@style/NormalButton"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:text="Locate nearby healthcare"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
+
+</ScrollView>
