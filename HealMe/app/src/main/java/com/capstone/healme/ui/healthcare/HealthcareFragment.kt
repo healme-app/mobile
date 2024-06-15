@@ -83,8 +83,6 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
 
 //    private fun getNearbyPlaces() {
 //        Log.d("Nearby places", "initialized")
-//        val key = "AIzaSyA6haHaisOVaKpqGwI2gZtHP2Xy2A4yaSs"
-//        Log.d("API KEY", key)
 //        Places.initialize(requireContext(), key)
 //        placesClient = Places.createClient(requireContext())
 //        val placeFields = listOf(
