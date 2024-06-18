@@ -9,7 +9,11 @@
         android:id="@+id/HomeFragment"
         android:name="com.capstone.healme.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_HomeFragment_to_HealthcareFragment"
+            app:destination="@id/HealthcareFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/HealthcareFragment"
@@ -62,7 +66,14 @@
         android:id="@+id/ProfileFragment"
         android:name="com.capstone.healme.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_ProfileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/editProfileFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/resultFragment"
         android:name="com.capstone.healme.ui.result.ResultFragment"
@@ -71,5 +82,14 @@
         <action
             android:id="@+id/action_resultFragment_to_navigation_healthcare"
             app:destination="@id/HealthcareFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.capstone.healme.ui.editprofile.EditProfileFragment"
+        android:label="@string/edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment" />
     </fragment>
 </navigation>

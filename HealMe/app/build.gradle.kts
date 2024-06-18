@@ -17,6 +17,7 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL", "\"http://34.101.113.145:3000/\"")
+        buildConfigField("String", "GEMINI_API_KEY", "\"AIzaSyCU7n7FOpCjSeq9Oi1qGRchXfapmWZmDJo\"")
     }
 
     buildTypes {
@@ -70,4 +71,6 @@ dependencies {
     implementation(libs.play.services.maps.v1802)
     implementation(libs.places)
     implementation(libs.play.services.location)
+
+    implementation(libs.generativeai)
 }

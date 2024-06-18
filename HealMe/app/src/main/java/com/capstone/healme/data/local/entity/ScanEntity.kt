@@ -17,9 +17,12 @@ data class ScanEntity(
     var result: String? = null,
 
     @ColumnInfo
-    var confidenceScore: Double? = null,
+    var confidenceScore: Float? = null,
 
     @ColumnInfo
-    var imageUrl: String? = null
+    var imageUrl: String? = null,
+
+    @ColumnInfo
+    var createdAt: String? = null
 
 ): Parcelable

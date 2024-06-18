@@ -13,10 +13,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.capstone.healme.R
 import com.capstone.healme.ViewModelFactory
+import com.capstone.healme.data.local.entity.ScanEntity
 import com.capstone.healme.databinding.FragmentScanBinding
 import com.capstone.healme.extension.gone
 import com.capstone.healme.extension.showToast
 import com.capstone.healme.extension.visible
+import com.capstone.healme.helper.convertDate
+import com.capstone.healme.helper.modifyDate
 import com.capstone.healme.helper.reduceFileImage
 import com.capstone.healme.helper.uriToFile
 import okhttp3.MediaType.Companion.toMediaType
@@ -65,8 +68,16 @@ class ScanFragment : Fragment() {
         scanViewModel = viewModel
 
         scanViewModel.scanResponse.observe(viewLifecycleOwner) {scanResponse ->
-            Log.d("imageUrl", scanResponse.resultDb?.imageUrl.toString())
-            Log.d("Error message", scanResponse.message.toString())
+            if (!scanResponse.error) {
+                scanResponse.let {
+                    it.resultDb?.let { resultDb ->
+                        val createdAt = convertDate(resultDb.createdAt!!)
+                        val entity = ScanEntity(resultDb.id!!, resultDb.result, resultDb.confidenceScore, resultDb.imageUrl, createdAt)
+                        scanViewModel.addHistory(entity)
+                    }
+                }
+                findNavController().navigate(R.id.action_scanFragment_to_resultFragment)
+            }
         }
     }
 
@@ -76,6 +87,10 @@ class ScanFragment : Fragment() {
                 startGallery()
             }
 
+            btnCamera.setOnClickListener {
+                findNavController().navigate(R.id.action_scanFragment_to_resultFragment)
+            }
+
             btnChangeImage.setOnClickListener {
                 currentImageUri = null
                 changeContainer()
@@ -83,6 +98,7 @@ class ScanFragment : Fragment() {
 
             btnScan.setOnClickListener {
                 scanImage()
+//                findNavController().navigate(R.id.action_scanFragment_to_resultFragment)
             }
         }
     }

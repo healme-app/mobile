@@ -4,12 +4,10 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.capstone.healme.R
@@ -21,11 +19,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
-import com.google.android.libraries.places.api.net.PlacesClient
 
 class HealthcareFragment : Fragment(), OnMapReadyCallback {
 
@@ -33,7 +26,6 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
     private val binding get() = _binding!!
 
     private lateinit var mMap: GoogleMap
-//    private lateinit var placesClient: PlacesClient
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var userLat: Double = 0.0
@@ -70,54 +62,10 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.isMyLocationButtonEnabled = true
-//        getNearbyPlaces()
         getLocation()
 
         mMap.uiSettings.isCompassEnabled = true
-
-//        mMap.uiSettings.isZoomControlsEnabled = true
-//        mMap.uiSettings.isIndoorLevelPickerEnabled = true
-//        mMap.uiSettings.isCompassEnabled = true
-//        mMap.uiSettings.isMapToolbarEnabled = true
     }
-
-//    private fun getNearbyPlaces() {
-//        Log.d("Nearby places", "initialized")
-//        Places.initialize(requireContext(), key)
-//        placesClient = Places.createClient(requireContext())
-//        val placeFields = listOf(
-//            Place.Field.ID,
-//            Place.Field.NAME,
-//            Place.Field.ADDRESS,
-//            Place.Field.LAT_LNG,
-//            Place.Field.TYPES
-//        )
-//        val placeType = Place.Type.HEALTH
-//
-//        val request = FindCurrentPlaceRequest.builder(placeFields)
-//            .build()
-//
-//        if (ActivityCompat.checkSelfPermission(
-//                requireContext(),
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-//                requireContext(),
-//                Manifest.permission.ACCESS_COARSE_LOCATION
-//            ) != PackageManager.PERMISSION_GRANTED
-//        ) {
-//            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-//            return
-//        }
-//        placesClient.findCurrentPlace(request).addOnSuccessListener { response ->
-//            Log.d("Success fetch nearby", "INIT")
-//            for (placeLikelihood in response.placeLikelihoods) {
-//                val place = placeLikelihood.place
-//                Log.d("success fetch nearby","Healthcare Place: ${place.name}, ${place.address}, ${place.latLng}, ${place.types}")
-//            }
-//        }.addOnFailureListener { response ->
-//            Log.d("error fetch nearby", response.message.toString())
-//        }
-//    }
 
     private fun updateCamera() {
         val zoomLevel = 15f

@@ -1,5 +1,6 @@
 package com.capstone.healme.ui.register
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,6 +12,9 @@ import okhttp3.RequestBody
 class RegisterViewModel(private val userRepository: UserRepository) : ViewModel() {
     private var _registerResponse = MutableLiveData<RegisterResponse>()
     val registerResponse = _registerResponse
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading = _isLoading
     fun registerUser(
         name: RequestBody,
         birthDate: RequestBody,
@@ -19,8 +23,10 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
         email: RequestBody,
         password: RequestBody
     ) {
+        _isLoading.value = true
         viewModelScope.launch {
             _registerResponse.value = userRepository.registerUser(name, birthDate, gender, weight, email, password)
+            _isLoading.value = false
         }
     }
 }

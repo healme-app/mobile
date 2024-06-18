@@ -47,3 +47,15 @@ fun File.reduceFileImage(): File {
     bitmap?.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
     return file
 }
+
+fun modifyDate(date: String): String {
+    return date.substringBefore("T")
+}
+
+fun convertDate(dateTime: String): String {
+    val index = dateTime.indexOf("T")
+    val date = dateTime.substring(0, index)
+    val time = dateTime.substring(index + 1, dateTime.indexOf("."))
+
+    return "$date $time"
+}

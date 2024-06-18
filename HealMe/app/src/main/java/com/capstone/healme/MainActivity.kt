@@ -45,8 +45,6 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.HomeFragment,
-                R.id.HealthcareFragment,
-                R.id.HistoryFragment,
                 R.id.ProfileFragment
             )
         )
@@ -71,10 +69,16 @@ class MainActivity : AppCompatActivity() {
                     supportActionBar?.hide()
                 }
 
-                R.id.scanFragment -> {
+                R.id.scanFragment, R.id.editProfileFragment, R.id.HealthcareFragment -> {
                     bottomAppBar.gone()
                     fab.gone()
                     supportActionBar?.show()
+                }
+
+                R.id.ProfileFragment, R.id.HomeFragment -> {
+                    bottomAppBar.visible()
+                    fab.visible()
+                    supportActionBar?.hide()
                 }
 
                 else -> {

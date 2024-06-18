@@ -15,6 +15,11 @@ interface HistoryDao {
     @Query("DELETE FROM scan")
     suspend fun deleteHistory()
 
-    @Query("select * from scan")
-    fun getAllUsers(): LiveData<List<ScanEntity>>
+    @Query("SELECT * FROM scan")
+    fun getAllHistory(): LiveData<List<ScanEntity>>
+
+    @Query("SELECT * FROM scan WHERE resultId = :resultId")
+    fun getDetailHistory(
+        resultId: String
+    ): LiveData<ScanEntity>
 }

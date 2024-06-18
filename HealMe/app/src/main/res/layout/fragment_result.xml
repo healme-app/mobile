@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Result"
+            android:text="@string/result"
             android:textAlignment="center"
             android:textStyle="bold" />
 
@@ -30,7 +30,8 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:scaleType="fitXY"
-                tools:src="@tools:sample/avatars"/>
+                tools:src="@tools:sample/avatars"
+                android:importantForAccessibility="no" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="Wound Type :" />
+                    android:text="@string/wound_type" />
 
                 <TextView
                     android:id="@+id/tv_wound_type"
@@ -52,7 +53,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:text="Burn"
                     android:textStyle="bold" />
 
                 <TextView
@@ -60,14 +60,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:text="Confidence Score :" />
+                    android:text="@string/confidence_score" />
 
                 <TextView
                     android:id="@+id/tv_confidence_score"
                     style="@style/subTitleText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="88%"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
@@ -84,15 +83,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Explanation" />
+                android:text="@string/explanation" />
 
             <TextView
                 android:id="@+id/tv_explanation"
                 style="@style/NormalText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:text="A burn is an injury to the skin caused by heat, chemicals, electricity, or radiation. It can range from minor (redness and pain) to severe (deep tissue damage)" />
+                android:maxLines="4" />
 
             <TextView
                 android:id="@+id/toggle_text_view_explanation"
@@ -113,19 +111,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="First-aid recommendation" />
+                android:text="@string/first_aid_recommendation" />
 
             <TextView
                 android:id="@+id/tv_first_aid"
                 style="@style/NormalText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:text="Minor Burns:\n
-Cool the burn with cool water for 10-15 minutes and cover with a sterile bandage.\n
-
-Severe Burns:\n
-Call emergency services, do not remove stuck clothing, and cover with a moist, sterile cloth" />
+                android:maxLines="4"/>
 
             <TextView
                 android:id="@+id/toggle_text_view_first_aid"
@@ -140,7 +133,7 @@ Call emergency services, do not remove stuck clothing, and cover with a moist, s
             style="@style/NormalButton"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="Back"
+            android:text="@string/back"
             android:layout_gravity="center"
             android:layout_marginTop="64dp"
             android:layout_marginBottom="16dp"/>
@@ -149,7 +142,7 @@ Call emergency services, do not remove stuck clothing, and cover with a moist, s
             style="@style/NormalButton"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:text="Locate nearby healthcare"
+            android:text="@string/locate_nearby_healthcare"
             android:layout_gravity="center"
             android:layout_marginBottom="16dp"/>
 

@@ -4,10 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.capstone.healme.data.local.datastore.UserPreferences
+import com.capstone.healme.data.local.entity.ScanEntity
 import com.capstone.healme.data.local.room.HistoryDao
 import com.capstone.healme.data.remote.response.LoginResponse
+import com.capstone.healme.data.remote.response.ProfileResponse
 import com.capstone.healme.data.remote.response.RegisterResponse
 import com.capstone.healme.data.remote.response.ScanResponse
+import com.capstone.healme.data.remote.response.UpdateProfileResponse
 import com.capstone.healme.data.remote.retrofit.ApiService
 import com.google.gson.Gson
 import okhttp3.MultipartBody
@@ -55,6 +58,37 @@ class UserRepository(
         }
     }
 
+    suspend fun getUserProfile(): ProfileResponse {
+        return try {
+            apiService.getProfile()
+        } catch (e: HttpException) {
+            val jsonInString = e.response()?.errorBody()?.string()
+            Gson().fromJson(jsonInString, ProfileResponse::class.java)
+        } catch (e: IOException) {
+            ProfileResponse(error = true, message = e.message)
+        } catch (e: Exception) {
+            ProfileResponse(error = true)
+        }
+    }
+
+    suspend fun updateUserProfile(
+        name: RequestBody,
+        birthDate: RequestBody,
+        gender: RequestBody,
+        weight: RequestBody
+    ): UpdateProfileResponse {
+        return try {
+            apiService.updateProfile(name, birthDate, gender, weight)
+        } catch (e: HttpException) {
+            val jsonInString = e.response()?.errorBody()?.string()
+            Gson().fromJson(jsonInString, UpdateProfileResponse::class.java)
+        } catch (e: IOException) {
+            UpdateProfileResponse(error = true, message = e.message)
+        } catch (e: Exception) {
+            UpdateProfileResponse(error = true)
+        }
+    }
+
     suspend fun scanImage(image: MultipartBody.Part): ScanResponse {
         return try {
             apiService.scanImage(image)
@@ -68,6 +102,16 @@ class UserRepository(
         }
     }
 
+    suspend fun addHistory(scanEntity: ScanEntity) {
+        historyDao.insertResult(scanEntity)
+    }
+
+    fun getAllHistory(): LiveData<List<ScanEntity>> {
+        return historyDao.getAllHistory()
+    }
+    fun getDetailHistory(resultId: String): LiveData<ScanEntity> {
+        return historyDao.getDetailHistory(resultId)
+    }
     suspend fun setUserLogin(token: String, id: String) {
         userPreferences.setUserLogin(token, id)
     }

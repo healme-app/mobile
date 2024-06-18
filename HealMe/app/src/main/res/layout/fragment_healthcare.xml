@@ -1,8 +1,51 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.healthcare.HealthcareFragment"/>
+    tools:context=".ui.healthcare.HealthcareFragment">
+    
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        map:layout_constraintBottom_toTopOf="@+id/card_view_list_healthcare"
+        map:layout_constraintTop_toTopOf="parent"
+        tools:context=".ui.healthcare.HealthcareFragment"/>
+    
+    
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_list_healthcare"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:cardCornerRadius="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+            <FrameLayout
+                android:id="@+id/adjustable_card_view"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                map:layout_constraintTop_toTopOf="parent">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="40dp"
+                    android:layout_height="10dp"
+                    map:cardElevation="0dp"
+                    map:cardCornerRadius="8dp"
+                    android:layout_gravity="center"
+                    map:cardBackgroundColor="@color/black_10"/>
+            </FrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                map:layout_constraintTop_toBottomOf="@+id/adjustable_card_view"
+                map:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

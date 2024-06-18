@@ -15,6 +15,7 @@ import androidx.transition.TransitionInflater
 import com.capstone.healme.R
 import com.capstone.healme.ViewModelFactory
 import com.capstone.healme.databinding.FragmentRegisterBinding
+import com.capstone.healme.extension.setLoading
 import com.capstone.healme.extension.showToast
 import com.capstone.healme.helper.DatePickerFragment
 import okhttp3.MediaType.Companion.toMediaType
@@ -138,27 +139,28 @@ class RegisterFragment : Fragment(), DatePickerFragment.DialogDateListener {
 
         registerViewModel.registerResponse.observe(viewLifecycleOwner) {
             if (it.userId?.isNotEmpty() == true) {
-                showToast("Successfully create account!", true)
+                showToast(getString(R.string.successfully_create_account), true)
                 binding.btnNavigateLogin.performClick()
             } else {
-                showToast("Failed to create account!", true)
+                showToast(getString(R.string.failed_to_create_account), true)
             }
         }
-    }
+
+        registerViewModel.isLoading.observe(viewLifecycleOwner) {isLoading ->
+            setLoading(binding.progressBar, isLoading)
+        }
+     }
 
     private fun setupGenderSelector() {
-        val genderOptions = arrayOf("male", "female")
+        val genderOptions = arrayOf(resources.getString(R.string.male), resources.getString(R.string.female))
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(resources.getString(R.string.select_gender))
 
-        binding.edRegisterGender.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setTitle("Select Gender")
-
-            builder.setItems(genderOptions) { _, which ->
-                binding.edRegisterGender.setText(genderOptions[which])
-            }
-
-            builder.show()
+        builder.setItems(genderOptions) { _, which ->
+            binding.edRegisterGender.setText(genderOptions[which])
         }
+
+        builder.show()
     }
 
     override fun onDialogDateSet(tag: String?, year: Int, month: Int, dayOfMonth: Int) {

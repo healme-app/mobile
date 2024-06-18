@@ -7,23 +7,11 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/HealthcareFragment"
-        android:icon="@drawable/baseline_location_on_24"
-        android:title="@string/title_healthcare" />
-
-
-    <item
         android:id="@+id/placeholder"
         android:title="" />
-
-    <item
-        android:id="@+id/HistoryFragment"
-        android:icon="@drawable/baseline_history_24"
-        android:title="@string/title_history" />
 
     <item
         android:id="@+id/ProfileFragment"
         android:icon="@drawable/baseline_person_24"
         android:title="@string/title_profile" />
-
 </menu>

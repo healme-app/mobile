@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class RegisterResponse(
     @field:SerializedName("error")
-    val error: Boolean? = null,
+    val error: Boolean = true,
 
     @field:SerializedName("message")
     val message: String? = null,

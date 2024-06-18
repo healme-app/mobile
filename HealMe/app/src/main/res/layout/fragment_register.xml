@@ -107,7 +107,7 @@
                     style="@style/NormalText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Birth date" />
+                    android:text="@string/birthdate" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/birthDateEditTextLayout"
@@ -142,7 +142,7 @@
                     style="@style/NormalText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Gender" />
+                    android:text="@string/gender" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/genderEditTextLayout"
@@ -177,7 +177,7 @@
                     style="@style/NormalText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Weight" />
+                    android:text="@string/weight" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/weightEditTextLayout"
@@ -334,6 +334,18 @@
                     android:text="@string/login_underline" />
             </FrameLayout>
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

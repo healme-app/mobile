@@ -5,8 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.healme.data.UserRepository
 import com.capstone.healme.di.Injection
+import com.capstone.healme.ui.editprofile.EditProfileViewModel
+import com.capstone.healme.ui.history.HistoryViewModel
 import com.capstone.healme.ui.login.LoginViewModel
+import com.capstone.healme.ui.profile.ProfileViewModel
 import com.capstone.healme.ui.register.RegisterViewModel
+import com.capstone.healme.ui.result.ResultViewModel
 import com.capstone.healme.ui.scan.ScanViewModel
 
 class ViewModelFactory(private val userRepository: UserRepository) :
@@ -21,6 +25,14 @@ class ViewModelFactory(private val userRepository: UserRepository) :
             return ScanViewModel(userRepository) as T
         } else if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
             return MainViewModel(userRepository) as T
+        } else if (modelClass.isAssignableFrom(ResultViewModel::class.java)) {
+            return ResultViewModel(userRepository) as T
+        } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            return ProfileViewModel(userRepository) as T
+        } else if (modelClass.isAssignableFrom(EditProfileViewModel::class.java)) {
+            return EditProfileViewModel(userRepository) as T
+        } else if (modelClass.isAssignableFrom(HistoryViewModel::class.java)) {
+            return HistoryViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

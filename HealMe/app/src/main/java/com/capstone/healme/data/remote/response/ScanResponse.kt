@@ -11,7 +11,7 @@ data class ScanResponse(
 	val resultDb: ResultDb? = null,
 
 	@field:SerializedName("error")
-	val error: Boolean? = null,
+	val error: Boolean = true,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -30,7 +30,7 @@ data class ResultDb(
 	val createdAt: String? = null,
 
 	@field:SerializedName("confidenceScore")
-	val confidenceScore: Int? = null,
+	val confidenceScore: Float? = null,
 
 	@field:SerializedName("imageUrl")
 	val imageUrl: String? = null,
