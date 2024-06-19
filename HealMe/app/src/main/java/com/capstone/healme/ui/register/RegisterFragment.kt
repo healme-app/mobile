@@ -2,7 +2,6 @@ package com.capstone.healme.ui.register
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,7 +66,12 @@ class RegisterFragment : Fragment(), DatePickerFragment.DialogDateListener {
                     listOf(name, birthDate, gender, weight, email, password, passwordConfirmation)
 
                 if (validateFields(inputFields)) {
-                    signUpUser(name, birthDate, gender, weight, email, password, passwordConfirmation)
+                    if (!emailEditTextLayout.isErrorEnabled && !passwordEditTextLayout.isErrorEnabled && !passwordConfirmationEditTextLayout.isErrorEnabled) {
+                        signUpUser(name, birthDate, gender, weight, email, password, passwordConfirmation)
+                    } else {
+                        showToast(resources.getString(R.string.fix_field), true)
+                    }
+
                 }
             }
 
@@ -122,7 +126,14 @@ class RegisterFragment : Fragment(), DatePickerFragment.DialogDateListener {
             val weightBody = weight.toRequestBody("text/plain".toMediaType())
             val emailBody = email.toRequestBody("text/plain".toMediaType())
             val passwordBody = password.toRequestBody("text/plain".toMediaType())
-            registerViewModel.registerUser(nameBody, birthDateBody, genderBody, weightBody, emailBody, passwordBody)
+            registerViewModel.registerUser(
+                nameBody,
+                birthDateBody,
+                genderBody,
+                weightBody,
+                emailBody,
+                passwordBody
+            )
         } else {
             showToast(resources.getString(R.string.password_not_match), false)
         }
@@ -146,13 +157,14 @@ class RegisterFragment : Fragment(), DatePickerFragment.DialogDateListener {
             }
         }
 
-        registerViewModel.isLoading.observe(viewLifecycleOwner) {isLoading ->
+        registerViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             setLoading(binding.progressBar, isLoading)
         }
-     }
+    }
 
     private fun setupGenderSelector() {
-        val genderOptions = arrayOf(resources.getString(R.string.male), resources.getString(R.string.female))
+        val genderOptions =
+            arrayOf(resources.getString(R.string.male), resources.getString(R.string.female))
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(resources.getString(R.string.select_gender))
 

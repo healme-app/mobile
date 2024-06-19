@@ -12,8 +12,6 @@ import com.bumptech.glide.Glide
 import com.capstone.healme.R
 import com.capstone.healme.ViewModelFactory
 import com.capstone.healme.databinding.FragmentResultBinding
-import com.capstone.healme.ui.register.RegisterViewModel
-import com.google.ai.client.generativeai.GenerativeModel
 
 class ResultFragment : Fragment() {
     private var _binding: FragmentResultBinding? = null
@@ -43,18 +41,19 @@ class ResultFragment : Fragment() {
 
         resultViewModel = viewModel
 
-//        val prompt = resources.getString(R.string.prompt_gemini, "kanker kulit", 25, 70, "laki-laki")
-//        resultViewModel.getResponse(prompt)
+        val prompt = resources.getString(R.string.prompt_gemini_result, "Squamous cell carcinoma", 25, 70, "laki-laki")
+        resultViewModel.getResponse(prompt)
 
         resultViewModel.geminiResponse.observe(viewLifecycleOwner) { geminiResponse ->
-            bindData(geminiResponse.explanation, geminiResponse.firstAidRecommendation)
+            if (geminiResponse.error == true) {
+                resultViewModel.getResponse(prompt)
+            } else {
+                bindData(geminiResponse.explanation!!, geminiResponse.firstAidRecommendation!!)
+            }
         }
 
         resultViewModel.getDetailHistory("666ef6c245b059f2ba91c44c").observe(viewLifecycleOwner) {
-            val prompt = resources.getString(R.string.prompt_gemini,"jerawat", 25, 70, "laki-laki")
-            val prompt1 = "tuliskan fakta menarik max 50 kata tentang kesehatan kulit yang interaktif"
-            val prompt2 = "Bagikan 25 kata tentang tips menjaga kesehatan kulit. Ajak peserta untuk bertanya dan berbagi pengalaman mereka."
-            resultViewModel.getResponse(prompt1)
+            resultViewModel.getResponse(prompt)
             binding.apply {
                 Glide.with(ivWound)
                     .load(it.imageUrl)

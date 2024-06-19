@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import androidx.core.content.FileProvider
+import com.capstone.healme.BuildConfig
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -25,6 +27,22 @@ fun uriToFile(imageUri: Uri, context: Context): File {
     outputStream.close()
     inputStream.close()
     return myFile
+}
+
+fun getTempFileUri(context: Context): Uri {
+    val tempFile = File.createTempFile("temp_image", ".jpg", context.cacheDir).apply {
+        deleteOnExit()
+    }
+    return FileProvider.getUriForFile(
+        context,
+        "${context.packageName}.provider",
+        tempFile
+    )
+}
+
+fun createTempFileInCacheDir(context: Context): File {
+    val cacheDir = context.cacheDir
+    return File.createTempFile("temp_image_${System.currentTimeMillis()}", ".jpg", cacheDir)
 }
 
 fun createCustomTempFile(context: Context): File {

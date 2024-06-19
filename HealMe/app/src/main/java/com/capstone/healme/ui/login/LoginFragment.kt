@@ -14,6 +14,7 @@ import androidx.transition.TransitionInflater
 import com.capstone.healme.R
 import com.capstone.healme.ViewModelFactory
 import com.capstone.healme.databinding.FragmentLoginBinding
+import com.capstone.healme.extension.setLoading
 import com.capstone.healme.extension.showToast
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -52,7 +53,11 @@ class LoginFragment : Fragment() {
             btnLogin.setOnClickListener {
                 val email = edLoginEmail.text.toString()
                 val password = edLoginPassword.text.toString()
-                loginUser(email, password)
+                if (!emailEditTextLayout.isErrorEnabled && !passwordEditTextLayout.isErrorEnabled) {
+                    loginUser(email, password)
+                } else {
+                    showToast(resources.getString(R.string.fix_field), true)
+                }
             }
 
             btnNavigateSignup.setOnClickListener {
@@ -73,9 +78,11 @@ class LoginFragment : Fragment() {
 
     private fun loginUser(email: String, password: String) {
         if (email.isNotEmpty() && password.isNotEmpty()) {
-                val emailBody = email.toRequestBody("text/plain".toMediaType())
-                val passwordBody = password.toRequestBody("text/plain".toMediaType())
-                loginViewModel.login(emailBody, passwordBody)
+            val emailBody = email.toRequestBody("text/plain".toMediaType())
+            val passwordBody = password.toRequestBody("text/plain".toMediaType())
+            loginViewModel.login(emailBody, passwordBody)
+        } else {
+            showToast(resources.getString(R.string.field_not_filled), false)
         }
     }
 
@@ -98,6 +105,10 @@ class LoginFragment : Fragment() {
                 showToast("Successfully login", false)
                 findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
             }
+        }
+
+        loginViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            setLoading(binding.progressBar, isLoading)
         }
     }
 }

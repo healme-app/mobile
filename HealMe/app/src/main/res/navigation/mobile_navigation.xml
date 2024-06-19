@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/HomeFragment">
+    app:startDestination="@id/placeholder">
 
     <fragment
         android:id="@+id/HomeFragment"
@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_HomeFragment_to_HealthcareFragment"
-            app:destination="@id/HealthcareFragment" />
+            app:destination="@id/HealthcareFragment"
+            />
+        <action
+            android:id="@+id/action_HomeFragment_to_HistoryFragment"
+            app:destination="@id/HistoryFragment" />
     </fragment>
 
     <fragment
@@ -25,7 +29,11 @@
         android:id="@+id/HistoryFragment"
         android:name="com.capstone.healme.ui.history.HistoryFragment"
         android:label="@string/title_history"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_HistoryFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.capstone.healme.ui.login.LoginFragment"
@@ -92,4 +100,7 @@
             android:id="@+id/action_editProfileFragment_to_ProfileFragment"
             app:destination="@id/ProfileFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/placeholder"
+        android:name="com.capstone.healme.ui.placeholder.PlaceholderFragment"/>
 </navigation>

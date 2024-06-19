@@ -1,13 +1,17 @@
 package com.capstone.healme.ui.healthcare
 
 import android.Manifest
+import android.animation.ValueAnimator
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.view.GestureDetector
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.capstone.healme.R
@@ -31,12 +35,14 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
     private var userLat: Double = 0.0
     private var userLon: Double = 0.0
 
+    private lateinit var cardView: CardView
+    private var currentState = STATE_EXPANDED
+
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-//                getNearbyPlaces()
                 getLocation()
             }
         }
@@ -56,8 +62,49 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        cardView = binding.cardViewListHealthcare
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        binding.adjustableCardView.setOnClickListener {
+            handlePerformClick()
+        }
     }
+
+    private fun handlePerformClick() {
+        when (currentState) {
+            STATE_COLLAPSED -> expandCardView()
+            STATE_EXPANDED -> collapseCardView()
+        }
+    }
+
+    private fun expandCardView() {
+        animateCardViewHeight(cardView.height, 300.dpToPx())
+        currentState = STATE_EXPANDED
+    }
+
+    private fun collapseCardView() {
+        animateCardViewHeight(cardView.height, 52.dpToPx())
+        currentState = STATE_COLLAPSED
+    }
+
+
+    private fun animateCardViewHeight(startHeight: Int, endHeight: Int) {
+        val animator = ValueAnimator.ofInt(startHeight, endHeight)
+        animator.addUpdateListener { animation ->
+            val value = animation.animatedValue as Int
+            val layoutParams = cardView.layoutParams
+            layoutParams.height = value
+            cardView.layoutParams = layoutParams
+        }
+        animator.duration = 300
+        animator.start()
+    }
+
+    private fun Int.dpToPx(): Int {
+        return (this * resources.displayMetrics.density).toInt()
+    }
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -98,5 +145,10 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val STATE_COLLAPSED = 0
+        const val STATE_EXPANDED = 1
     }
 }

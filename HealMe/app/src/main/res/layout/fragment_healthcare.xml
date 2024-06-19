@@ -19,8 +19,7 @@
         android:id="@+id/card_view_list_healthcare"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        map:layout_constraintBottom_toBottomOf="parent"
-        map:cardCornerRadius="16dp">
+        map:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -44,6 +43,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="16dp"
                 map:layout_constraintTop_toBottomOf="@+id/adjustable_card_view"
                 map:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

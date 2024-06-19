@@ -13,9 +13,13 @@ class ScanViewModel(private val userRepository: UserRepository): ViewModel() {
     private var _scanResponse = MutableLiveData<ScanResponse>()
     val scanResponse = _scanResponse
 
+    private var _isLoading = MutableLiveData<Boolean>()
+    val isLoading = _isLoading
     fun scanImage(image: MultipartBody.Part) {
+        _isLoading.value = true
         viewModelScope.launch {
             _scanResponse.value = userRepository.scanImage(image)
+            _isLoading.value = false
         }
     }
 

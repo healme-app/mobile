@@ -7,6 +7,7 @@ import com.capstone.healme.data.UserRepository
 import com.capstone.healme.di.Injection
 import com.capstone.healme.ui.editprofile.EditProfileViewModel
 import com.capstone.healme.ui.history.HistoryViewModel
+import com.capstone.healme.ui.home.HomeViewModel
 import com.capstone.healme.ui.login.LoginViewModel
 import com.capstone.healme.ui.profile.ProfileViewModel
 import com.capstone.healme.ui.register.RegisterViewModel
@@ -33,6 +34,8 @@ class ViewModelFactory(private val userRepository: UserRepository) :
             return EditProfileViewModel(userRepository) as T
         } else if (modelClass.isAssignableFrom(HistoryViewModel::class.java)) {
             return HistoryViewModel(userRepository) as T
+        } else if(modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            return HomeViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

@@ -6,12 +6,15 @@ import androidx.lifecycle.asLiveData
 import com.capstone.healme.data.local.datastore.UserPreferences
 import com.capstone.healme.data.local.entity.ScanEntity
 import com.capstone.healme.data.local.room.HistoryDao
+import com.capstone.healme.data.remote.response.GeminiResponse
 import com.capstone.healme.data.remote.response.LoginResponse
 import com.capstone.healme.data.remote.response.ProfileResponse
 import com.capstone.healme.data.remote.response.RegisterResponse
 import com.capstone.healme.data.remote.response.ScanResponse
 import com.capstone.healme.data.remote.response.UpdateProfileResponse
 import com.capstone.healme.data.remote.retrofit.ApiService
+import com.google.ai.client.generativeai.GenerativeModel
+import com.google.ai.client.generativeai.type.ServerException
 import com.google.gson.Gson
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -21,7 +24,8 @@ import java.io.IOException
 class UserRepository(
     private val apiService: ApiService,
     private val userPreferences: UserPreferences,
-    private val historyDao: HistoryDao
+    private val historyDao: HistoryDao,
+    private val geminiModel: GenerativeModel
 ) {
 
     suspend fun registerUser(
@@ -124,16 +128,35 @@ class UserRepository(
         return userPreferences.checkLoginStatus().asLiveData()
     }
 
+    suspend fun getResponseResult(prompt: String): GeminiResponse {
+        return try {
+            val geminiResponseRaw = geminiModel.generateContent(prompt).text
+            val geminiResponseJson = geminiResponseRaw?.replace("*", "")!!
+            Gson().fromJson(geminiResponseJson, GeminiResponse::class.java)
+        } catch (e: ServerException) {
+            GeminiResponse(error = true)
+        }
+    }
+
+    suspend fun getResponseTips(prompt: String): String {
+        return try {
+            geminiModel.generateContent(prompt).text!!.replace("*", "")
+        } catch (e: ServerException) {
+            "Ada kesalahan pada server, coba lagi!"
+        }
+    }
+
     companion object {
         @Volatile
         private var instance: UserRepository? = null
         fun getInstance(
             apiService: ApiService,
             userPreferences: UserPreferences,
-            historyDao: HistoryDao
+            historyDao: HistoryDao,
+            geminiModel: GenerativeModel
         ): UserRepository =
             instance ?: synchronized(this) {
-                instance ?: UserRepository(apiService, userPreferences, historyDao)
+                instance ?: UserRepository(apiService, userPreferences, historyDao, geminiModel)
             }.also { instance = it }
     }
 }
