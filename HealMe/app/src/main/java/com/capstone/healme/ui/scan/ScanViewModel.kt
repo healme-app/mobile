@@ -9,7 +9,7 @@ import com.capstone.healme.data.remote.response.ScanResponse
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 
-class ScanViewModel(private val userRepository: UserRepository): ViewModel() {
+class ScanViewModel(private val userRepository: UserRepository) : ViewModel() {
     private var _scanResponse = MutableLiveData<ScanResponse>()
     val scanResponse = _scanResponse
 
@@ -28,8 +28,5 @@ class ScanViewModel(private val userRepository: UserRepository): ViewModel() {
             userRepository.addHistory(scanEntity)
         }
     }
-
-    fun clearViewModel() {
-        _scanResponse.value = ScanResponse()
-    }
+    
 }

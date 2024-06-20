@@ -5,15 +5,11 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.core.content.FileProvider
-import com.capstone.healme.BuildConfig
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.Period
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -38,15 +34,8 @@ fun getTempFileUri(context: Context): Uri {
         deleteOnExit()
     }
     return FileProvider.getUriForFile(
-        context,
-        "${context.packageName}.provider",
-        tempFile
+        context, "${context.packageName}.provider", tempFile
     )
-}
-
-fun createTempFileInCacheDir(context: Context): File {
-    val cacheDir = context.cacheDir
-    return File.createTempFile("temp_image_${System.currentTimeMillis()}", ".jpg", cacheDir)
 }
 
 fun createCustomTempFile(context: Context): File {

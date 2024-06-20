@@ -7,13 +7,14 @@ import com.capstone.healme.data.UserRepository
 import com.capstone.healme.data.remote.response.ProfileResponse
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(private val userRepository: UserRepository): ViewModel() {
+class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
     private var _profileResponse = MutableLiveData<ProfileResponse>()
     val profileResponse = _profileResponse
 
     init {
         getUserProfile()
     }
+
     fun getUserProfile() {
         viewModelScope.launch {
             _profileResponse.value = userRepository.getUserProfile()

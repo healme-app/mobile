@@ -8,7 +8,7 @@ import com.capstone.healme.data.remote.response.LoginResponse
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
 
-class LoginViewModel(private val userRepository: UserRepository): ViewModel() {
+class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
     private var _loginResponse = MutableLiveData<LoginResponse>()
     val loginResponse = _loginResponse
 

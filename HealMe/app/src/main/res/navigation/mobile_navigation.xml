@@ -114,4 +114,9 @@
         android:name="com.capstone.healme.ui.updatepassword.UpdatePasswordFragment"
         android:label="@string/change_password"
         tools:layout="@layout/fragment_update_password" />
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.capstone.healme.ui.onboarding.OnboardingFragment"
+        android:label="fragment_onboarding"
+        tools:layout="@layout/fragment_onboarding" />
 </navigation>

@@ -17,6 +17,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
     private val isLogin = booleanPreferencesKey("is_login")
     private val userToken = stringPreferencesKey("user_token")
     private val userId = stringPreferencesKey("user_id")
+    private val firstOpen = booleanPreferencesKey("first_open")
 
     suspend fun setUserLogin(token: String, id: String) {
         dataStore.edit { preferences ->
@@ -25,6 +26,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             preferences[userId] = id
         }
     }
+
 
     suspend fun setUserLogout() {
         dataStore.edit { preferences ->
@@ -46,9 +48,15 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
-    fun getUserId(): Flow<String> {
-        return dataStore.data.map { preferences->
-            preferences[userId] ?: ""
+    suspend fun setFirstOpen() {
+        dataStore.edit { preferences ->
+            preferences[firstOpen] = false
+        }
+    }
+
+    fun getFirstOpen(): Flow<Boolean> {
+        return dataStore.data.map { preferences ->
+            preferences[firstOpen] ?: true
         }
     }
 

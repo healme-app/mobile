@@ -98,7 +98,10 @@ class UserRepository(
         }
     }
 
-    suspend fun updatePassword(oldPassword: RequestBody, newPassword: RequestBody): UpdatePasswordResponse {
+    suspend fun updatePassword(
+        oldPassword: RequestBody,
+        newPassword: RequestBody
+    ): UpdatePasswordResponse {
         return try {
             apiService.updatePassword(oldPassword, newPassword)
         } catch (e: HttpException) {
@@ -110,6 +113,7 @@ class UserRepository(
             UpdatePasswordResponse(error = true, message = e.message)
         }
     }
+
     suspend fun scanImage(image: MultipartBody.Part): ScanResponse {
         return try {
             apiService.scanImage(image)
@@ -143,9 +147,11 @@ class UserRepository(
     fun getAllHistory(): LiveData<List<ScanEntity>> {
         return historyDao.getAllHistory()
     }
+
     fun getDetailHistory(resultId: String): LiveData<ScanEntity> {
         return historyDao.getDetailHistory(resultId)
     }
+
     suspend fun setUserLogin(token: String, id: String) {
         userPreferences.setUserLogin(token, id)
     }
@@ -158,10 +164,18 @@ class UserRepository(
         return userPreferences.checkLoginStatus().asLiveData()
     }
 
+    suspend fun setFirstOpen() {
+        userPreferences.setFirstOpen()
+    }
+
+    fun getFirstOpen(): LiveData<Boolean> {
+        return userPreferences.getFirstOpen().asLiveData()
+    }
+
     suspend fun getResponseResult(prompt: String): GeminiResponse {
         return try {
             val geminiResponseRaw = geminiModel.generateContent(prompt).text
-            val geminiResponseJson = geminiResponseRaw?.replace("*", "")!!
+            val geminiResponseJson = geminiResponseRaw?.replace("*", "")!!.replace("#", "")
             Gson().fromJson(geminiResponseJson, GeminiResponse::class.java)
         } catch (e: ServerException) {
             GeminiResponse(error = true)

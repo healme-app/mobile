@@ -32,7 +32,6 @@
     <string name="read_more">Selengkapnya</string>
     <string name="read_less">Lebih sedikit</string>
     <string name="birth_date">%04d-%02d-%02d</string>
-    <string name="no_connection">No internet connection!</string>
     <string name="prompt_gemini_result">Dalam konteks edukasi dan bukan untuk menggantikan nasihat medis profesional, Buatlah penjelasan sederhana mengenai penyakit %1s berdasarkan informasi medis, dan berikan rekomendasi pertolongan pertama yang disesuaikan dengan usia (%2d tahun), berat badan (%3d kg), dan jenis kelamin (%4s). Hasilnya harus berupa objek JSON dalam bahasa Indonesia, tanpa tanda kutip tunggal di awal dan di akhir JSON. Isi dari objek JSON tersebut harus mencakup dua kunci: \'explanation\' untuk penjelasan mengenai penyakit dan \'firstAidRecommendation\' untuk rekomendasi pertolongan pertama.</string>
     <!--    <string name="prompt_gemini_fun_fact">berikan sebuah tips kesehatan kulit yang tidak banyak diketahui orang awam dan masuk akal maksimal 50 kata. tuliskan dengan interaktif tanpa emote dan jangan banyak endline</string>-->
     <string name="prompt_gemini_fun_fact">berperanlah sebagai praktisi kesehatan kulit, berikan sebuah tips kesehatan kulit yang jarang saya ketahui walaupun itu penting dan masuk akal. tuliskan dengan interaktif tanpa emote dan maksimal 40 kata</string>
@@ -80,4 +79,12 @@
     <string name="new_password">Sandi baru</string>
     <string name="update_password_success">Sandi berhasil diubah</string>
     <string name="update_password_failed">Gagal mengubah sandi. Error: %1$s</string>
+
+    <string name="onboarding_title_1">Pindai Luka Anda</string>
+    <string name="onboarding_desc_1">Gunakan HealMe untuk memindai jenis luka Anda. Kecerdasan buatan kami dapat mendeteksi jenis luka Anda, memberikan informasi yang penting untuk pengelolaan selanjutnya.</string>
+    <string name="onboarding_title_2">Rekomendasi Pertolongan Pertama</string>
+    <string name="onboarding_desc_2">Dapatkan penjelasan dan rekomendasi pertolongan pertama yang interaktif menggunakan Generative AI. HealMe memberikan panduan langkah demi langkah yang dapat Anda ikuti untuk mengelola luka Anda dengan lebih baik.</string>
+    <string name="onboarding_title_3">Temukan Layanan Kesehatan Terdekat</string>
+    <string name="onboarding_desc_3">Gunakan fitur pencarian dari HealMe untuk menemukan lokasi fasilitas kesehatan terdekat, termasuk apotek dan layanan darurat. dapatkan informasi tentang lokasi dan status operasional untuk memudahkan Anda dalam mencari bantuan medis sesuai kebutuhan.</string>
+    <string name="start">Mulai!</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.capstone.healme.ui.register
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,7 +24,8 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
     ) {
         _isLoading.value = true
         viewModelScope.launch {
-            _registerResponse.value = userRepository.registerUser(name, birthDate, gender, weight, email, password)
+            _registerResponse.value =
+                userRepository.registerUser(name, birthDate, gender, weight, email, password)
             _isLoading.value = false
         }
     }

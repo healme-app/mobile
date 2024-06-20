@@ -1,16 +1,7 @@
 package com.capstone.healme.extension
 
-import android.content.Context
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-
-fun Context.showToast(message: String, isShort: Boolean) {
-    if (isShort) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    } else {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-    }
-}
 
 fun Fragment.showToast(message: String, isShort: Boolean) {
     if (isShort) {

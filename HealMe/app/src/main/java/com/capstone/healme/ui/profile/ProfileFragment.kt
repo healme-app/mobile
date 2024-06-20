@@ -57,7 +57,7 @@ class ProfileFragment : Fragment() {
         profileViewModel = viewModel
 
         profileViewModel.profileResponse.observe(viewLifecycleOwner) { profileResponse ->
-            if(profileResponse.error) {
+            if (profileResponse.error) {
                 showToast(profileResponse.message!!, true)
             }
             bindData(profileResponse)

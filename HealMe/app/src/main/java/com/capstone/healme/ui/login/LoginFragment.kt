@@ -1,7 +1,6 @@
 package com.capstone.healme.ui.login
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,8 +23,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var loginViewModel: LoginViewModel
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
@@ -67,10 +65,7 @@ class LoginFragment : Fragment() {
                     containerField to "field_register"
                 )
                 findNavController().navigate(
-                    R.id.action_loginFragment_to_registerFragment,
-                    null,
-                    null,
-                    extras
+                    R.id.action_loginFragment_to_registerFragment, null, null, extras
                 )
             }
         }

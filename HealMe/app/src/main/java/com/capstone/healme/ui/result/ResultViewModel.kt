@@ -19,6 +19,7 @@ class ResultViewModel(private val userRepository: UserRepository) : ViewModel() 
 
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading = _isLoading
+
     init {
         getUserProfile()
     }

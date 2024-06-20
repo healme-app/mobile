@@ -2,7 +2,6 @@ package com.capstone.healme.ui.editprofile
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,7 +51,8 @@ class EditProfileFragment : Fragment(), DatePickerFragment.DialogDateListener {
 
             btnSaveChanges.setOnClickListener {
                 val name = edEditName.text.toString().toRequestBody("text/plain".toMediaType())
-                val birthdate = edEditBirthdate.text.toString().toRequestBody("text/plain".toMediaType())
+                val birthdate =
+                    edEditBirthdate.text.toString().toRequestBody("text/plain".toMediaType())
                 val gender = edEditGender.text.toString().toRequestBody("text/plain".toMediaType())
                 val weight = edEditWeight.text.toString().toRequestBody("text/plain".toMediaType())
 

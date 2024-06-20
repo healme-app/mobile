@@ -155,7 +155,6 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
         currentState = STATE_COLLAPSED
     }
 
-
     private fun animateCardViewHeight(startHeight: Int, endHeight: Int) {
         val animator = ValueAnimator.ofInt(startHeight, endHeight)
         animator.addUpdateListener { animation ->

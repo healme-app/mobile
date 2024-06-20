@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.capstone.healme.data.remote.response.DataItem
 import com.capstone.healme.databinding.ItemRowHealthcareBinding
 
-class HealthcareAdapter(val updateCamera: (DataItem) -> Unit): ListAdapter<DataItem, HealthcareAdapter.ListViewHolder>(DIFF_CALLBACK) {
-    class ListViewHolder(private var binding: ItemRowHealthcareBinding): RecyclerView.ViewHolder(binding.root) {
+class HealthcareAdapter(val updateCamera: (DataItem) -> Unit) :
+    ListAdapter<DataItem, HealthcareAdapter.ListViewHolder>(DIFF_CALLBACK) {
+    class ListViewHolder(private var binding: ItemRowHealthcareBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(places: DataItem) {
             binding.apply {
                 tvName.text = places.displayName
@@ -24,7 +26,8 @@ class HealthcareAdapter(val updateCamera: (DataItem) -> Unit): ListAdapter<DataI
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        val binding = ItemRowHealthcareBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemRowHealthcareBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding)
     }
 

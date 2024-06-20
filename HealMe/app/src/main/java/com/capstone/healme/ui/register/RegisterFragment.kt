@@ -2,7 +2,6 @@ package com.capstone.healme.ui.register
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,8 +28,7 @@ class RegisterFragment : Fragment(), DatePickerFragment.DialogDateListener {
     private lateinit var registerViewModel: RegisterViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
@@ -68,7 +66,9 @@ class RegisterFragment : Fragment(), DatePickerFragment.DialogDateListener {
 
                 if (validateFields(inputFields)) {
                     if (!emailEditTextLayout.isErrorEnabled && !passwordEditTextLayout.isErrorEnabled && !passwordConfirmationEditTextLayout.isErrorEnabled) {
-                        signUpUser(name, birthDate, gender, weight, email, password, passwordConfirmation)
+                        signUpUser(
+                            name, birthDate, gender, weight, email, password, passwordConfirmation
+                        )
                     } else {
                         showToast(resources.getString(R.string.fix_field), true)
                     }
@@ -83,10 +83,7 @@ class RegisterFragment : Fragment(), DatePickerFragment.DialogDateListener {
                     containerField to "field_login"
                 )
                 findNavController().navigate(
-                    R.id.action_registerFragment_to_loginFragment,
-                    null,
-                    null,
-                    extras
+                    R.id.action_registerFragment_to_loginFragment, null, null, extras
                 )
             }
 
@@ -128,12 +125,7 @@ class RegisterFragment : Fragment(), DatePickerFragment.DialogDateListener {
             val emailBody = email.toRequestBody("text/plain".toMediaType())
             val passwordBody = password.toRequestBody("text/plain".toMediaType())
             registerViewModel.registerUser(
-                nameBody,
-                birthDateBody,
-                genderBody,
-                weightBody,
-                emailBody,
-                passwordBody
+                nameBody, birthDateBody, genderBody, weightBody, emailBody, passwordBody
             )
         } else {
             showToast(resources.getString(R.string.password_not_match), false)

@@ -21,8 +21,7 @@ class UpdatePasswordFragment : Fragment() {
     private lateinit var updatePasswordViewModel: UpdatePasswordViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUpdatePasswordBinding.inflate(inflater, container, false)
         return binding.root

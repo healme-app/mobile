@@ -10,6 +10,7 @@ import com.capstone.healme.ui.healthcare.HealthcareViewModel
 import com.capstone.healme.ui.history.HistoryViewModel
 import com.capstone.healme.ui.home.HomeViewModel
 import com.capstone.healme.ui.login.LoginViewModel
+import com.capstone.healme.ui.onboarding.OnboardingViewModel
 import com.capstone.healme.ui.profile.ProfileViewModel
 import com.capstone.healme.ui.register.RegisterViewModel
 import com.capstone.healme.ui.result.ResultViewModel
@@ -42,6 +43,8 @@ class ViewModelFactory(private val userRepository: UserRepository) :
             return HealthcareViewModel(userRepository) as T
         } else if (modelClass.isAssignableFrom(UpdatePasswordViewModel::class.java)) {
             return UpdatePasswordViewModel(userRepository) as T
+        } else if (modelClass.isAssignableFrom(OnboardingViewModel::class.java)) {
+            return OnboardingViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
@@ -49,9 +52,8 @@ class ViewModelFactory(private val userRepository: UserRepository) :
     companion object {
         @Volatile
         private var instance: ViewModelFactory? = null
-        fun getInstance(context: Context): ViewModelFactory =
-            instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository(context))
-            }.also { instance = it }
+        fun getInstance(context: Context): ViewModelFactory = instance ?: synchronized(this) {
+            instance ?: ViewModelFactory(Injection.provideRepository(context))
+        }.also { instance = it }
     }
 }

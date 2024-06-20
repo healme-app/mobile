@@ -79,7 +79,7 @@ class ResultFragment : Fragment() {
             }
         }
 
-        resultViewModel.isLoading.observe(viewLifecycleOwner) {isLoading ->
+        resultViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             setCustomLoading(binding.progressBar, binding.containerExplanation, isLoading)
         }
     }

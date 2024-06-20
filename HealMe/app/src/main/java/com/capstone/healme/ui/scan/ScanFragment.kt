@@ -17,7 +17,6 @@ import com.capstone.healme.data.local.entity.ScanEntity
 import com.capstone.healme.databinding.FragmentScanBinding
 import com.capstone.healme.extension.gone
 import com.capstone.healme.extension.setCustomLoading
-import com.capstone.healme.extension.setLoading
 import com.capstone.healme.extension.showToast
 import com.capstone.healme.extension.visible
 import com.capstone.healme.helper.convertDate
@@ -58,8 +57,7 @@ class ScanFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentScanBinding.inflate(inflater, container, false)
         return binding.root

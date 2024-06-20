@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.healme.ViewModelFactory
 import com.capstone.healme.databinding.FragmentHistoryBinding
-import com.capstone.healme.ui.login.LoginViewModel
 
 class HistoryFragment : Fragment() {
 
@@ -19,9 +18,7 @@ class HistoryFragment : Fragment() {
     private lateinit var historyViewModel: HistoryViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root

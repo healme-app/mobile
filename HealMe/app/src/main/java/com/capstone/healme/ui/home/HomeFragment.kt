@@ -24,9 +24,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -61,9 +59,7 @@ class HomeFragment : Fragment() {
                     binding.cardview2.gone()
                     binding.apply {
                         scanEntity[0].let {
-                            Glide.with(ivWound1)
-                                .load(it.imageUrl)
-                                .into(ivWound1)
+                            Glide.with(ivWound1).load(it.imageUrl).into(ivWound1)
                             tvWoundType1.text = it.result
                             tvConfidenceScore1.text = it.confidenceScore.toString()
                         }
@@ -76,9 +72,7 @@ class HomeFragment : Fragment() {
                     val lastIndex = scanEntity.lastIndex
                     binding.apply {
                         scanEntity[lastIndex].let {
-                            Glide.with(ivWound1)
-                                .load(it.imageUrl)
-                                .into(ivWound1)
+                            Glide.with(ivWound1).load(it.imageUrl).into(ivWound1)
                             tvWoundType1.text = it.result
                             tvConfidenceScore1.text = it.confidenceScore.toString()
 
@@ -87,9 +81,7 @@ class HomeFragment : Fragment() {
                             }
                         }
                         scanEntity[lastIndex - 1].let {
-                            Glide.with(ivWound2)
-                                .load(it.imageUrl)
-                                .into(ivWound2)
+                            Glide.with(ivWound2).load(it.imageUrl).into(ivWound2)
                             tvWoundType2.text = it.result
                             tvConfidenceScore2.text = it.confidenceScore.toString()
 

@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.capstone.healme.R
 import com.capstone.healme.data.local.entity.ScanEntity
-import com.capstone.healme.databinding.FragmentEditProfileBinding
 import com.capstone.healme.databinding.ItemRowHistoryBinding
 
-class HistoryAdapter: ListAdapter<ScanEntity, HistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class HistoryAdapter : ListAdapter<ScanEntity, HistoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ItemRowHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemRowHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MyViewHolder(binding)
     }
 
@@ -32,12 +32,10 @@ class HistoryAdapter: ListAdapter<ScanEntity, HistoryAdapter.MyViewHolder>(DIFF_
         }
     }
 
-    class MyViewHolder(val binding: ItemRowHistoryBinding): RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(val binding: ItemRowHistoryBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(scanEntity: ScanEntity) {
             binding.apply {
-                Glide.with(ivWound)
-                    .load(scanEntity.imageUrl)
-                    .into(ivWound)
+                Glide.with(ivWound).load(scanEntity.imageUrl).into(ivWound)
                 tvWoundType.text = scanEntity.result
                 tvConfidenceScore.text = scanEntity.confidenceScore.toString()
                 tvDateCreated.text = scanEntity.createdAt
