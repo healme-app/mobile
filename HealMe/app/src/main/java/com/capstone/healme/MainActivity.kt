@@ -1,10 +1,8 @@
 package com.capstone.healme
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -24,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -56,16 +53,12 @@ class MainActivity : AppCompatActivity() {
                 navController.graph = navGraph
                 setupActionBarWithNavController(navController, appBarConfiguration)
                 navView.setupWithNavController(navController)
-                Log.d("first open", "yes")
             } else {
-                Log.d("first open", "no")
                 mainViewModel.checkUserState().observe(this) { isLogin ->
                     if (isLogin) {
                         navGraph.setStartDestination(R.id.HomeFragment)
-                        Log.d("home fragment", "yes")
                     } else {
                         navGraph.setStartDestination(R.id.loginFragment)
-                        Log.d("login fragment", "yes")
                     }
                     navController.graph = navGraph
                     setupActionBarWithNavController(navController, appBarConfiguration)

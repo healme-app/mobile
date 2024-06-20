@@ -1,6 +1,5 @@
 package com.capstone.healme.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.capstone.healme.data.local.datastore.UserPreferences
@@ -47,7 +46,6 @@ class UserRepository(
             val jsonInString = e.response()?.errorBody()?.string()
             Gson().fromJson(jsonInString, RegisterResponse::class.java)
         } catch (e: IOException) {
-            Log.d("IOException", e.message!!)
             RegisterResponse(error = true, message = e.message)
         } catch (e: Exception) {
             RegisterResponse(error = true, message = e.message)

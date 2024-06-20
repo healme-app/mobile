@@ -1,6 +1,5 @@
 package com.capstone.healme.ui.home
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,18 +12,19 @@ class HomeViewModel(private val userRepository: UserRepository) : ViewModel() {
     private var _geminiResponse = MutableLiveData<String>()
     val geminiResponse = _geminiResponse
 
-    private var _loadingRecentScan = MutableLiveData<Boolean> ()
+    private var _loadingRecentScan = MutableLiveData<Boolean>()
     val loadingRecentScan = _loadingRecentScan
 
-    private var _loadingHealthTips = MutableLiveData<Boolean> ()
+    private var _loadingHealthTips = MutableLiveData<Boolean>()
     val loadingHealthTips = _loadingHealthTips
 
-    private var _histories = MediatorLiveData<List<ScanEntity>> ()
+    private var _histories = MediatorLiveData<List<ScanEntity>>()
     val histories = _histories
 
     init {
         getAllHistories()
     }
+
     fun getGeminiTips(prompt: String) {
         _loadingHealthTips.value = true
         viewModelScope.launch {
@@ -37,7 +37,7 @@ class HomeViewModel(private val userRepository: UserRepository) : ViewModel() {
         _loadingRecentScan.value = true
 
         val source = userRepository.getAllHistory()
-        _histories.addSource(source) {data->
+        _histories.addSource(source) { data ->
             _histories.value = data
             _loadingRecentScan.value = false
             _histories.removeSource(source)
