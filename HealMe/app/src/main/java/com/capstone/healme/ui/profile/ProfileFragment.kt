@@ -1,5 +1,7 @@
 package com.capstone.healme.ui.profile
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +38,7 @@ class ProfileFragment : Fragment() {
     private fun setupAction() {
         binding.apply {
             btnLogout.setOnClickListener {
-                profileViewModel.logoutUser()
+                showLogoutConfirmationDialog()
             }
             btnEditProfile.setOnClickListener {
                 findNavController().navigate(R.id.action_ProfileFragment_to_editProfileFragment)
@@ -75,6 +77,20 @@ class ProfileFragment : Fragment() {
                 tvWeight.text = profileUser.weight.toString()
             }
         }
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(resources.getString(R.string.logout))
+        builder.setMessage(getString(R.string.logout_message))
+        builder.setPositiveButton(getString(R.string.yes)) { _: DialogInterface, _: Int ->
+            profileViewModel.logoutUser()
+        }
+        builder.setNegativeButton(getString(R.string.no)) { dialogInterface: DialogInterface, _: Int ->
+            dialogInterface.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 
     override fun onResume() {

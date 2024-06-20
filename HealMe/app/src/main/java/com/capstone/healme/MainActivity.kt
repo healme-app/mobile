@@ -47,14 +47,15 @@ class MainActivity : AppCompatActivity() {
         )
 
         mainViewModel.checkFirstOpen().observe(this) { firstOpen ->
-            val navGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
             if (firstOpen) {
+                val navGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
                 navGraph.setStartDestination(R.id.onboardingFragment)
                 navController.graph = navGraph
                 setupActionBarWithNavController(navController, appBarConfiguration)
                 navView.setupWithNavController(navController)
             } else {
                 mainViewModel.checkUserState().observe(this) { isLogin ->
+                    val navGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
                     if (isLogin) {
                         navGraph.setStartDestination(R.id.HomeFragment)
                     } else {
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                     supportActionBar?.hide()
                 }
 
-                R.id.scanFragment, R.id.editProfileFragment, R.id.HealthcareFragment, R.id.HistoryFragment, R.id.resultFragment -> {
+                R.id.scanFragment, R.id.editProfileFragment, R.id.HealthcareFragment, R.id.HistoryFragment, R.id.resultFragment, R.id.updatePasswordFragment -> {
                     bottomAppBar.gone()
                     fab.gone()
                     supportActionBar?.show()

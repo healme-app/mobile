@@ -87,4 +87,7 @@
     <string name="onboarding_title_3">Temukan Layanan Kesehatan Terdekat</string>
     <string name="onboarding_desc_3">Gunakan fitur pencarian dari HealMe untuk menemukan lokasi fasilitas kesehatan terdekat, termasuk apotek dan layanan darurat. dapatkan informasi tentang lokasi dan status operasional untuk memudahkan Anda dalam mencari bantuan medis sesuai kebutuhan.</string>
     <string name="start">Mulai!</string>
+    <string name="logout_message">Apakah anda yakin ingin keluar?</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
 </resources>
