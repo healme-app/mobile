@@ -17,7 +17,7 @@ data class ScanEntity(
     var result: String? = null,
 
     @ColumnInfo
-    var confidenceScore: Float? = null,
+    var confidenceScore: String? = null,
 
     @ColumnInfo
     var imageUrl: String? = null,

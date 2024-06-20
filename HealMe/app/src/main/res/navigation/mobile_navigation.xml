@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_HomeFragment_to_HistoryFragment"
             app:destination="@id/HistoryFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
     </fragment>
 
     <fragment
@@ -32,7 +35,8 @@
         tools:layout="@layout/fragment_history" >
         <action
             android:id="@+id/action_HistoryFragment_to_resultFragment"
-            app:destination="@id/resultFragment" />
+            app:destination="@id/resultFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -68,7 +72,9 @@
         tools:layout="@layout/fragment_scan" >
         <action
             android:id="@+id/action_scanFragment_to_resultFragment"
-            app:destination="@id/resultFragment" />
+            app:destination="@id/resultFragment"
+            app:popUpTo="@id/scanFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/ProfileFragment"
@@ -81,15 +87,15 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/editProfileFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_ProfileFragment_to_updatePasswordFragment"
+            app:destination="@id/updatePasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
         android:name="com.capstone.healme.ui.result.ResultFragment"
         android:label="@string/title_result"
         tools:layout="@layout/fragment_result" >
-        <action
-            android:id="@+id/action_resultFragment_to_navigation_healthcare"
-            app:destination="@id/HealthcareFragment" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -103,4 +109,9 @@
     <fragment
         android:id="@+id/placeholder"
         android:name="com.capstone.healme.ui.placeholder.PlaceholderFragment"/>
+    <fragment
+        android:id="@+id/updatePasswordFragment"
+        android:name="com.capstone.healme.ui.updatepassword.UpdatePasswordFragment"
+        android:label="@string/change_password"
+        tools:layout="@layout/fragment_update_password" />
 </navigation>

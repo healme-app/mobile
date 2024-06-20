@@ -16,7 +16,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"http://34.101.113.145:3000/\"")
+        buildConfigField("String", "BASE_URL", "\"http://34.124.156.53:3000/\"")
         buildConfigField("String", "GEMINI_API_KEY", "\"AIzaSyCU7n7FOpCjSeq9Oi1qGRchXfapmWZmDJo\"")
     }
 

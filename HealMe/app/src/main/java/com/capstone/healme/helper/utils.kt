@@ -11,6 +11,10 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.Period
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -76,4 +80,17 @@ fun convertDate(dateTime: String): String {
     val time = dateTime.substring(index + 1, dateTime.indexOf("."))
 
     return "$date $time"
+}
+
+fun calculateAge(dateOfBirth: String): Int {
+    val today = Calendar.getInstance()
+    val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val dob = sdf.parse(dateOfBirth)
+    val birthDate = Calendar.getInstance()
+    birthDate.time = dob!!
+    var age = today.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR)
+    if (today.get(Calendar.DAY_OF_YEAR) < birthDate.get(Calendar.DAY_OF_YEAR)) {
+        age--
+    }
+    return age
 }

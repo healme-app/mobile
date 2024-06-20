@@ -95,14 +95,13 @@ class LoginFragment : Fragment() {
         loginViewModel = viewModel
 
         loginViewModel.loginResponse.observe(viewLifecycleOwner) {
-            if (it.error == null) {
-                showToast(it.message!!, false)
+            if (it.error) {
+                showToast(getString(R.string.login_error, it.message), false)
             } else {
                 val token = it.loginResult?.token!!
-                Log.d("token API", token)
                 val id = it.loginResult.userId!!
                 loginViewModel.setUserLogin(token, id)
-                showToast("Successfully login", false)
+                showToast(getString(R.string.login_success), false)
                 findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
             }
         }

@@ -2,8 +2,6 @@ package com.capstone.healme.ui.home
 
 import android.animation.ValueAnimator
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +12,9 @@ import com.bumptech.glide.Glide
 import com.capstone.healme.R
 import com.capstone.healme.ViewModelFactory
 import com.capstone.healme.databinding.FragmentHomeBinding
+import com.capstone.healme.extension.gone
 import com.capstone.healme.extension.setCustomLoading
+import com.capstone.healme.extension.visible
 
 class HomeFragment : Fragment() {
 
@@ -54,20 +54,55 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.histories.observe(viewLifecycleOwner) { scanEntity ->
-            binding.apply {
-                scanEntity[0].let {
-                    Glide.with(ivWound1)
-                        .load(it.imageUrl)
-                        .into(ivWound1)
-                    tvWoundType1.text = it.result
-                    tvConfidenceScore1.text = it.confidenceScore.toString()
+            if (scanEntity.isNotEmpty()) {
+                binding.alertNoRecentScan.gone()
+                binding.itemRecentScan.visible()
+                if (scanEntity.size == 1) {
+                    binding.cardview2.gone()
+                    binding.apply {
+                        scanEntity[0].let {
+                            Glide.with(ivWound1)
+                                .load(it.imageUrl)
+                                .into(ivWound1)
+                            tvWoundType1.text = it.result
+                            tvConfidenceScore1.text = it.confidenceScore.toString()
+                        }
+                        cardview1.setOnClickListener {
+                            navigateDetailHistory(scanEntity[0].resultId)
+                        }
+                    }
+                } else {
+                    binding.cardview2.visible()
+                    val lastIndex = scanEntity.lastIndex
+                    binding.apply {
+                        scanEntity[lastIndex].let {
+                            Glide.with(ivWound1)
+                                .load(it.imageUrl)
+                                .into(ivWound1)
+                            tvWoundType1.text = it.result
+                            tvConfidenceScore1.text = it.confidenceScore.toString()
+
+                            cardview1.setOnClickListener { _ ->
+                                navigateDetailHistory(it.resultId)
+                            }
+                        }
+                        scanEntity[lastIndex - 1].let {
+                            Glide.with(ivWound2)
+                                .load(it.imageUrl)
+                                .into(ivWound2)
+                            tvWoundType2.text = it.result
+                            tvConfidenceScore2.text = it.confidenceScore.toString()
+
+                            cardview2.setOnClickListener { _ ->
+                                navigateDetailHistory(it.resultId)
+                            }
+                        }
+                    }
                 }
-                scanEntity[1].let {
-                    Glide.with(ivWound2)
-                        .load(it.imageUrl)
-                        .into(ivWound2)
-                    tvWoundType2.text = it.result
-                    tvConfidenceScore2.text = it.confidenceScore.toString()
+            } else {
+                binding.apply {
+                    itemRecentScan.gone()
+                    alertNoRecentScan.visible()
                 }
             }
         }
@@ -119,6 +154,17 @@ class HomeFragment : Fragment() {
                 animator.start()
             }
         }
+    }
+
+    private fun navigateDetailHistory(resultId: String) {
+        val bundle = Bundle()
+        bundle.putString("resultId", resultId)
+        findNavController().navigate(R.id.action_HomeFragment_to_resultFragment, bundle)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        homeViewModel.getAllHistories()
     }
 
     override fun onDestroyView() {

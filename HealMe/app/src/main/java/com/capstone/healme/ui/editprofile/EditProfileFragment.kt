@@ -91,11 +91,10 @@ class EditProfileFragment : Fragment(), DatePickerFragment.DialogDateListener {
 
         editProfileViewModel.editProfileResponse.observe(viewLifecycleOwner) {
             if (!it.error) {
-                showToast("Successfully update profile!", false)
+                showToast(getString(R.string.update_profile_success), false)
                 findNavController().popBackStack()
             } else {
-                Log.d("Error", it.message!!)
-                showToast(it.message, false)
+                showToast(getString(R.string.update_profile_error, it.message), false)
             }
         }
     }

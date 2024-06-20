@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.checkUserState().observe(this) {
             val navGraph = navController.navInflater.inflate(R.navigation.mobile_navigation)
-            if (!it) {
+            if (it) {
                 navGraph.setStartDestination(R.id.HomeFragment)
             } else {
                 navGraph.setStartDestination(R.id.loginFragment)
@@ -63,13 +63,13 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginFragment, R.id.registerFragment, R.id.resultFragment, R.id.placeholder -> {
+                R.id.loginFragment, R.id.registerFragment, R.id.placeholder -> {
                     bottomAppBar.gone()
                     fab.gone()
                     supportActionBar?.hide()
                 }
 
-                R.id.scanFragment, R.id.editProfileFragment, R.id.HealthcareFragment, R.id.HistoryFragment -> {
+                R.id.scanFragment, R.id.editProfileFragment, R.id.HealthcareFragment, R.id.HistoryFragment, R.id.resultFragment -> {
                     bottomAppBar.gone()
                     fab.gone()
                     supportActionBar?.show()

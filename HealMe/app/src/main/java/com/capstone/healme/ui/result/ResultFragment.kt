@@ -7,16 +7,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.capstone.healme.R
 import com.capstone.healme.ViewModelFactory
 import com.capstone.healme.databinding.FragmentResultBinding
+import com.capstone.healme.extension.setCustomLoading
+import com.capstone.healme.helper.calculateAge
 
 class ResultFragment : Fragment() {
     private var _binding: FragmentResultBinding? = null
     private val binding get() = _binding!!
     private lateinit var resultViewModel: ResultViewModel
+
+    private lateinit var prompt: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,11 +32,12 @@ class ResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val id = arguments?.getString("resultId")
+        setupViewModel(id!!)
         setupAction()
-        setupViewModel()
     }
 
-    private fun setupViewModel() {
+    private fun setupViewModel(resultId: String) {
         val factory: ViewModelFactory = ViewModelFactory.getInstance(requireActivity())
         val viewModel: ResultViewModel by viewModels {
             factory
@@ -41,8 +45,31 @@ class ResultFragment : Fragment() {
 
         resultViewModel = viewModel
 
-        val prompt = resources.getString(R.string.prompt_gemini_result, "Squamous cell carcinoma", 25, 70, "laki-laki")
-        resultViewModel.getResponse(prompt)
+        resultViewModel.getDetailHistory(resultId).observe(viewLifecycleOwner) {
+            binding.apply {
+                Glide.with(ivWound)
+                    .load(it.imageUrl)
+                    .into(ivWound)
+                tvWoundType.text = it.result
+                tvConfidenceScore.text = it.confidenceScore.toString()
+            }
+
+            val result = it.result
+
+            resultViewModel.profileResponse.observe(viewLifecycleOwner) { profile ->
+                profile.user?.let { user ->
+                    val age = calculateAge(user.dateOfBirth!!)
+                    prompt = resources.getString(
+                        R.string.prompt_gemini_result,
+                        result,
+                        age,
+                        user.weight,
+                        user.gender
+                    )
+                    resultViewModel.getResponse(prompt)
+                }
+            }
+        }
 
         resultViewModel.geminiResponse.observe(viewLifecycleOwner) { geminiResponse ->
             if (geminiResponse.error == true) {
@@ -52,15 +79,8 @@ class ResultFragment : Fragment() {
             }
         }
 
-        resultViewModel.getDetailHistory("666ef6c245b059f2ba91c44c").observe(viewLifecycleOwner) {
-            resultViewModel.getResponse(prompt)
-            binding.apply {
-                Glide.with(ivWound)
-                    .load(it.imageUrl)
-                    .into(ivWound)
-                tvWoundType.text = it.result
-                tvConfidenceScore.text = it.confidenceScore.toString()
-            }
+        resultViewModel.isLoading.observe(viewLifecycleOwner) {isLoading ->
+            setCustomLoading(binding.progressBar, binding.containerExplanation, isLoading)
         }
     }
 
@@ -68,9 +88,6 @@ class ResultFragment : Fragment() {
         binding.apply {
             tvExplanation.text = explanation
             tvFirstAid.text = firstAidRecommendation
-//            Glide.with(ivWound)
-//                .load("https://storage.googleapis.com/skin-image-upload-1/20240614T134623370Z.jpg")
-//                .into(ivWound)
         }
     }
 
@@ -79,14 +96,6 @@ class ResultFragment : Fragment() {
         binding.apply {
             setupToggle(tvExplanation, toggleTextViewExplanation)
             setupToggle(tvFirstAid, toggleTextViewFirstAid)
-
-            btnBack.setOnClickListener {
-                findNavController().popBackStack()
-            }
-
-            btnHealthcare.setOnClickListener {
-                findNavController().navigate(R.id.action_resultFragment_to_navigation_healthcare)
-            }
         }
     }
 

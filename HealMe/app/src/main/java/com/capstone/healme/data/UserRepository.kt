@@ -6,15 +6,20 @@ import androidx.lifecycle.asLiveData
 import com.capstone.healme.data.local.datastore.UserPreferences
 import com.capstone.healme.data.local.entity.ScanEntity
 import com.capstone.healme.data.local.room.HistoryDao
+import com.capstone.healme.data.remote.requestbody.HealthcareBody
 import com.capstone.healme.data.remote.response.GeminiResponse
+import com.capstone.healme.data.remote.response.HealthcareResponse
 import com.capstone.healme.data.remote.response.LoginResponse
 import com.capstone.healme.data.remote.response.ProfileResponse
 import com.capstone.healme.data.remote.response.RegisterResponse
 import com.capstone.healme.data.remote.response.ScanResponse
+import com.capstone.healme.data.remote.response.UpdatePasswordResponse
 import com.capstone.healme.data.remote.response.UpdateProfileResponse
 import com.capstone.healme.data.remote.retrofit.ApiService
 import com.google.ai.client.generativeai.GenerativeModel
+import com.google.ai.client.generativeai.type.GoogleGenerativeAIException
 import com.google.ai.client.generativeai.type.ServerException
+import com.google.ai.client.generativeai.type.UnknownException
 import com.google.gson.Gson
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -45,7 +50,7 @@ class UserRepository(
             Log.d("IOException", e.message!!)
             RegisterResponse(error = true, message = e.message)
         } catch (e: Exception) {
-            RegisterResponse(error = true, message = "Unknown Error")
+            RegisterResponse(error = true, message = e.message)
         }
     }
 
@@ -58,7 +63,7 @@ class UserRepository(
         } catch (e: IOException) {
             LoginResponse(error = true, message = e.message)
         } catch (e: Exception) {
-            LoginResponse(error = true)
+            LoginResponse(error = true, message = e.message)
         }
     }
 
@@ -71,7 +76,7 @@ class UserRepository(
         } catch (e: IOException) {
             ProfileResponse(error = true, message = e.message)
         } catch (e: Exception) {
-            ProfileResponse(error = true)
+            ProfileResponse(error = true, message = e.message)
         }
     }
 
@@ -89,10 +94,22 @@ class UserRepository(
         } catch (e: IOException) {
             UpdateProfileResponse(error = true, message = e.message)
         } catch (e: Exception) {
-            UpdateProfileResponse(error = true)
+            UpdateProfileResponse(error = true, message = e.message)
         }
     }
 
+    suspend fun updatePassword(oldPassword: RequestBody, newPassword: RequestBody): UpdatePasswordResponse {
+        return try {
+            apiService.updatePassword(oldPassword, newPassword)
+        } catch (e: HttpException) {
+            val jsonInString = e.response()?.errorBody()?.string()
+            Gson().fromJson(jsonInString, UpdatePasswordResponse::class.java)
+        } catch (e: IOException) {
+            UpdatePasswordResponse(error = true, message = e.message)
+        } catch (e: Exception) {
+            UpdatePasswordResponse(error = true, message = e.message)
+        }
+    }
     suspend fun scanImage(image: MultipartBody.Part): ScanResponse {
         return try {
             apiService.scanImage(image)
@@ -103,6 +120,19 @@ class UserRepository(
             ScanResponse(error = true, message = e.message)
         } catch (e: Exception) {
             ScanResponse(error = true, message = e.message)
+        }
+    }
+
+    suspend fun getNearbyHealthcare(healthcareBody: HealthcareBody): HealthcareResponse {
+        return try {
+            apiService.getNearbyPlaces(healthcareBody)
+        } catch (e: HttpException) {
+            val jsonInString = e.response()?.errorBody()?.string()
+            Gson().fromJson(jsonInString, HealthcareResponse::class.java)
+        } catch (e: IOException) {
+            HealthcareResponse(error = true, message = e.message)
+        } catch (e: Exception) {
+            HealthcareResponse(error = true, message = e.message)
         }
     }
 
@@ -135,6 +165,10 @@ class UserRepository(
             Gson().fromJson(geminiResponseJson, GeminiResponse::class.java)
         } catch (e: ServerException) {
             GeminiResponse(error = true)
+        } catch (e: UnknownException) {
+            GeminiResponse(error = true)
+        } catch (e: GoogleGenerativeAIException) {
+            GeminiResponse(error = true)
         }
     }
 
@@ -142,6 +176,10 @@ class UserRepository(
         return try {
             geminiModel.generateContent(prompt).text!!.replace("*", "")
         } catch (e: ServerException) {
+            "Ada kesalahan pada server, coba lagi!"
+        } catch (e: UnknownException) {
+            "Ada kesalahan pada server, coba lagi!"
+        } catch (e: GoogleGenerativeAIException) {
             "Ada kesalahan pada server, coba lagi!"
         }
     }

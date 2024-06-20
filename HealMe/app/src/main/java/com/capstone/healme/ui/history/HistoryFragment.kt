@@ -56,7 +56,7 @@ class HistoryFragment : Fragment() {
         historyViewModel = viewModel
 
         historyViewModel.getAllHistories().observe(viewLifecycleOwner) {
-            historyAdapter.submitList(it)
+            historyAdapter.submitList(it.reversed())
         }
     }
 

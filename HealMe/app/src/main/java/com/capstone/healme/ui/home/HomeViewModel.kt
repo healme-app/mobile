@@ -33,7 +33,7 @@ class HomeViewModel(private val userRepository: UserRepository) : ViewModel() {
         }
     }
 
-    private fun getAllHistories() {
+    fun getAllHistories() {
         _loadingRecentScan.value = true
 
         val source = userRepository.getAllHistory()

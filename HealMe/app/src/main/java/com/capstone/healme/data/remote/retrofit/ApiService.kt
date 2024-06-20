@@ -1,12 +1,16 @@
 package com.capstone.healme.data.remote.retrofit
 
+import com.capstone.healme.data.remote.requestbody.HealthcareBody
+import com.capstone.healme.data.remote.response.HealthcareResponse
 import com.capstone.healme.data.remote.response.LoginResponse
 import com.capstone.healme.data.remote.response.ProfileResponse
 import com.capstone.healme.data.remote.response.RegisterResponse
 import com.capstone.healme.data.remote.response.ScanResponse
+import com.capstone.healme.data.remote.response.UpdatePasswordResponse
 import com.capstone.healme.data.remote.response.UpdateProfileResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -44,10 +48,22 @@ interface ApiService {
         @Part("weight") weight: RequestBody
     ): UpdateProfileResponse
 
+    @Multipart
+    @PUT("auth/update-password")
+    suspend fun updatePassword(
+        @Part("oldPassword") oldPassword: RequestBody,
+        @Part("newPassword") newPassword: RequestBody
+    ): UpdatePasswordResponse
+
 
     @Multipart
     @POST("predict/result")
     suspend fun scanImage(
         @Part file: MultipartBody.Part
     ): ScanResponse
+
+    @POST("hospital/nearby-hospital")
+    suspend fun getNearbyPlaces(
+        @Body healthcareBody: HealthcareBody
+    ): HealthcareResponse
 }

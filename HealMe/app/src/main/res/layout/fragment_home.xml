@@ -82,13 +82,25 @@
                         android:textColor="?attr/colorSecondary" />
                 </FrameLayout>
 
+                <TextView
+                    android:id="@+id/alert_no_recent_scan"
+                    style="@style/subTitleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="gone"
+                    android:layout_marginTop="32dp"
+                    android:textAlignment="center"
+                    android:text="@string/no_recent_scan"/>
                 <LinearLayout
+                    android:id="@+id/item_recent_scan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:orientation="vertical">
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cardview1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -128,6 +140,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textStyle="bold"
+                                    android:layout_marginEnd="8dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
                                     tools:text="luka bakar" />
 
                                 <TextView
@@ -149,6 +164,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/cardview2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardBackgroundColor="@color/dark_aqua_10"
@@ -187,6 +203,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textStyle="bold"
+                                    android:layout_marginEnd="8dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
                                     tools:text="luka bakar" />
 
                                 <TextView

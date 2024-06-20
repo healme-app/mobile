@@ -41,6 +41,10 @@ class ProfileFragment : Fragment() {
             btnEditProfile.setOnClickListener {
                 findNavController().navigate(R.id.action_ProfileFragment_to_editProfileFragment)
             }
+
+            btnChangePassword.setOnClickListener {
+                findNavController().navigate(R.id.action_ProfileFragment_to_updatePasswordFragment)
+            }
         }
     }
 

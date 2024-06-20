@@ -1,67 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="8dp">
+    app:cardBackgroundColor="@color/dark_aqua_10"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="0dp"
+    android:layout_marginBottom="8dp">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp">
-        <ImageView
-            android:id="@+id/iv_wound"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            tools:src="@tools:sample/avatars"
-            android:importantForAccessibility="no" />
-        <FrameLayout
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp">
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_wound"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+
+                android:importantForAccessibility="no"
+                tools:src="@tools:sample/avatars" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="start|center">
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:orientation="vertical">
+
                 <TextView
                     style="@style/NormalText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/wound_type"
-                    android:textColor="@color/black_50"/>
+                    android:textColor="@color/black_50" />
+
                 <TextView
-                    style="@style/NormalText"
                     android:id="@+id/tv_wound_type"
+                    style="@style/NormalText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    tools:text="luka bakar"/>
+                    tools:text="luka bakar" />
 
                 <TextView
                     style="@style/NormalText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/confidence_score"
-                    android:textColor="@color/black_50"/>
+                    android:textColor="@color/black_50" />
+
                 <TextView
-                    style="@style/NormalText"
                     android:id="@+id/tv_confidence_score"
+                    style="@style/NormalText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    tools:text="luka bakar"/>
+                    tools:text="98%" />
             </LinearLayout>
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_date_created"
-                style="@style/NormalText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|top"
-                android:textAlignment="textEnd"
-                tools:text="2024-01-02\n18:30:00"/>
-        </FrameLayout>
-
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tv_date_created"
+            style="@style/NormalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:textStyle="bold"
+            tools:text="2003-01-02" />
+    </FrameLayout>
 </com.google.android.material.card.MaterialCardView>

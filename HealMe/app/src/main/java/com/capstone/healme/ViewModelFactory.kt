@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.healme.data.UserRepository
 import com.capstone.healme.di.Injection
 import com.capstone.healme.ui.editprofile.EditProfileViewModel
+import com.capstone.healme.ui.healthcare.HealthcareViewModel
 import com.capstone.healme.ui.history.HistoryViewModel
 import com.capstone.healme.ui.home.HomeViewModel
 import com.capstone.healme.ui.login.LoginViewModel
@@ -13,6 +14,7 @@ import com.capstone.healme.ui.profile.ProfileViewModel
 import com.capstone.healme.ui.register.RegisterViewModel
 import com.capstone.healme.ui.result.ResultViewModel
 import com.capstone.healme.ui.scan.ScanViewModel
+import com.capstone.healme.ui.updatepassword.UpdatePasswordViewModel
 
 class ViewModelFactory(private val userRepository: UserRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -34,8 +36,12 @@ class ViewModelFactory(private val userRepository: UserRepository) :
             return EditProfileViewModel(userRepository) as T
         } else if (modelClass.isAssignableFrom(HistoryViewModel::class.java)) {
             return HistoryViewModel(userRepository) as T
-        } else if(modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+        } else if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(userRepository) as T
+        } else if (modelClass.isAssignableFrom(HealthcareViewModel::class.java)) {
+            return HealthcareViewModel(userRepository) as T
+        } else if (modelClass.isAssignableFrom(UpdatePasswordViewModel::class.java)) {
+            return UpdatePasswordViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

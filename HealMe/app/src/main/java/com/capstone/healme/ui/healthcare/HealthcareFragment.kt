@@ -5,16 +5,18 @@ import android.animation.ValueAnimator
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
-import android.view.GestureDetector
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.healme.R
+import com.capstone.healme.ViewModelFactory
+import com.capstone.healme.data.remote.requestbody.HealthcareBody
 import com.capstone.healme.databinding.FragmentHealthcareBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -23,6 +25,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 
 class HealthcareFragment : Fragment(), OnMapReadyCallback {
 
@@ -30,6 +35,7 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
     private val binding get() = _binding!!
 
     private lateinit var mMap: GoogleMap
+    private val markersMap = mutableMapOf<LatLng, Marker?>()
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var userLat: Double = 0.0
@@ -37,6 +43,9 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var cardView: CardView
     private var currentState = STATE_EXPANDED
+
+    private lateinit var healthcareViewModel: HealthcareViewModel
+    private lateinit var adapter: HealthcareAdapter
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -59,6 +68,8 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupViewModel()
+
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
@@ -68,6 +79,62 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
 
         binding.adjustableCardView.setOnClickListener {
             handlePerformClick()
+        }
+
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        binding.apply {
+            rvHealthcare.layoutManager = LinearLayoutManager(context)
+            adapter = HealthcareAdapter {
+                updateCameraBound(it.location!!.latitude!!, it.location.longitude!!)
+            }
+            rvHealthcare.adapter = adapter
+        }
+    }
+
+    private fun setupViewModel() {
+        val factory: ViewModelFactory = ViewModelFactory.getInstance(requireActivity())
+        val viewModel: HealthcareViewModel by viewModels {
+            factory
+        }
+        healthcareViewModel = viewModel
+
+        healthcareViewModel.latLong.observe(viewLifecycleOwner) {
+            val healthcareBody = HealthcareBody(it[0], it[1], RADIUS)
+            healthcareViewModel.getNearbyHealthcare(healthcareBody)
+        }
+
+        healthcareViewModel.healthcareResponse.observe(viewLifecycleOwner) { healthcareResponse ->
+            if (healthcareResponse.error == true) {
+                healthcareViewModel.latLong.value.let {
+                    val healthcareBody = HealthcareBody(it!![0], it[1], RADIUS)
+                    healthcareViewModel.getNearbyHealthcare(healthcareBody)
+                }
+            } else {
+                healthcareResponse.data?.let { dataItems ->
+                    adapter.submitList(dataItems)
+                    val boundsBuilder = LatLngBounds.Builder()
+
+                    dataItems.forEach { data ->
+                        data?.location?.let {
+                            val latLng = LatLng(it.latitude!!, it.longitude!!)
+                            val marker = mMap.addMarker(
+                                MarkerOptions().position(latLng).title(data.displayName)
+                                    .snippet(data.shortFormattedAddress)
+                            )
+                            markersMap[latLng] = marker
+                            boundsBuilder.include(latLng)
+                        }
+                    }
+
+                    val bounds = boundsBuilder.build()
+                    val padding = 50
+                    val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+                    mMap.animateCamera(cameraUpdate)
+                }
+            }
         }
     }
 
@@ -114,10 +181,27 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
         mMap.uiSettings.isCompassEnabled = true
     }
 
-    private fun updateCamera() {
+    private fun updateCameraBound(lat: Double, lon: Double) {
+        val boundsBuilder = LatLngBounds.Builder()
+
+        val userLatLng = LatLng(userLat, userLon)
+        val targetLatLng = LatLng(lat, lon)
+
+        boundsBuilder.include(userLatLng)
+        boundsBuilder.include(targetLatLng)
+
+        val bounds = boundsBuilder.build()
+        val padding = 300
+        val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+        mMap.animateCamera(cameraUpdate)
+
+        markersMap[targetLatLng]?.showInfoWindow()
+    }
+
+    private fun updateCamera(lat: Double, lon: Double) {
         val zoomLevel = 15f
-        val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(userLat, userLon), zoomLevel)
-        mMap.moveCamera(cameraUpdate)
+        val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(lat, lon), zoomLevel)
+        mMap.animateCamera(cameraUpdate)
     }
 
     private fun getLocation() {
@@ -134,7 +218,8 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
                     if (location != null) {
                         userLat = location.latitude
                         userLon = location.longitude
-                        updateCamera()
+                        updateCamera(userLat, userLon)
+                        healthcareViewModel.setLatLong(userLat, userLon)
                     }
                 }
         } else {
@@ -150,5 +235,6 @@ class HealthcareFragment : Fragment(), OnMapReadyCallback {
     companion object {
         const val STATE_COLLAPSED = 0
         const val STATE_EXPANDED = 1
+        const val RADIUS = 5000
     }
 }

@@ -2,6 +2,7 @@ package com.capstone.healme.ui.register
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -153,7 +154,7 @@ class RegisterFragment : Fragment(), DatePickerFragment.DialogDateListener {
                 showToast(getString(R.string.successfully_create_account), true)
                 binding.btnNavigateLogin.performClick()
             } else {
-                showToast(getString(R.string.failed_to_create_account), true)
+                showToast(getString(R.string.failed_to_create_account, it.message), true)
             }
         }
 

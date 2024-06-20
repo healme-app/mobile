@@ -16,6 +16,7 @@ import com.capstone.healme.ViewModelFactory
 import com.capstone.healme.data.local.entity.ScanEntity
 import com.capstone.healme.databinding.FragmentScanBinding
 import com.capstone.healme.extension.gone
+import com.capstone.healme.extension.setCustomLoading
 import com.capstone.healme.extension.setLoading
 import com.capstone.healme.extension.showToast
 import com.capstone.healme.extension.visible
@@ -84,25 +85,30 @@ class ScanFragment : Fragment() {
                 scanResponse.let {
                     it.resultDb?.let { resultDb ->
                         val createdAt = convertDate(resultDb.createdAt!!)
+                        val confidenceScore = "${resultDb.confidenceScore}%"
                         val entity = ScanEntity(
                             resultDb.id!!,
                             resultDb.result,
-                            resultDb.confidenceScore,
+                            confidenceScore,
                             resultDb.imageUrl,
                             createdAt
                         )
                         scanViewModel.addHistory(entity)
                     }
+                    val bundle = Bundle().apply {
+                        putString("resultId", scanResponse.resultDb?.id)
+                    }
+                    findNavController().navigate(R.id.action_scanFragment_to_resultFragment, bundle)
+                    currentImageUri = null
+                    deleteTempFile(requireContext())
                 }
-                deleteTempFile(requireContext())
-                findNavController().navigate(R.id.action_scanFragment_to_resultFragment)
             } else {
-                showToast(scanResponse.message?: "Error", false)
+                showToast(scanResponse.message ?: getString(R.string.unknown_error), false)
             }
         }
 
-        scanViewModel.isLoading.observe(viewLifecycleOwner) {isLoading ->
-            setLoading(binding.progressBar, isLoading)
+        scanViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            setCustomLoading(binding.progressBar, binding.containerImageChooser, isLoading)
         }
     }
 
@@ -123,7 +129,6 @@ class ScanFragment : Fragment() {
 
             btnScan.setOnClickListener {
                 scanImage()
-//                findNavController().navigate(R.id.action_scanFragment_to_resultFragment)
             }
         }
     }
@@ -181,6 +186,7 @@ class ScanFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        _binding = null
         deleteTempFile(requireContext())
     }
 }

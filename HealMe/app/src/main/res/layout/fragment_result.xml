@@ -11,15 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            style="@style/TitleText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="@string/result"
-            android:textAlignment="center"
-            android:textStyle="bold" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,80 +62,77 @@
             </LinearLayout>
         </LinearLayout>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            tools:visibility="visible" />
 
         <LinearLayout
+            android:id="@+id/container_explanation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                style="@style/TitleText"
+            android:orientation="vertical">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/explanation" />
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
 
-            <TextView
-                android:id="@+id/tv_explanation"
-                style="@style/NormalText"
+                <TextView
+                    style="@style/TitleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/explanation" />
+
+                <TextView
+                    android:id="@+id/tv_explanation"
+                    style="@style/NormalText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="4" />
+
+                <TextView
+                    android:id="@+id/toggle_text_view_explanation"
+                    style="@style/clickableText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/read_more" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="4" />
+                android:orientation="vertical"
+                android:layout_marginBottom="8dp">
 
-            <TextView
-                android:id="@+id/toggle_text_view_explanation"
-                style="@style/clickableText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/read_more" />
+                <TextView
+                    style="@style/TitleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/first_aid_recommendation" />
+
+                <TextView
+                    android:id="@+id/tv_first_aid"
+                    style="@style/NormalText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="4"/>
+
+                <TextView
+                    android:id="@+id/toggle_text_view_first_aid"
+                    style="@style/clickableText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/read_more" />
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="8dp">
-
-            <TextView
-                style="@style/TitleText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="@string/first_aid_recommendation" />
-
-            <TextView
-                android:id="@+id/tv_first_aid"
-                style="@style/NormalText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="4"/>
-
-            <TextView
-                android:id="@+id/toggle_text_view_first_aid"
-                style="@style/clickableText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/read_more" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_back"
-            style="@style/NormalButton"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:text="@string/back"
-            android:layout_gravity="center"
-            android:layout_marginTop="64dp"
-            android:layout_marginBottom="16dp"/>
-        <Button
-            android:id="@+id/btn_healthcare"
-            style="@style/NormalButton"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:text="@string/locate_nearby_healthcare"
-            android:layout_gravity="center"
-            android:layout_marginBottom="16dp"/>
 
     </LinearLayout>
 

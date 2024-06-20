@@ -28,4 +28,8 @@ class ScanViewModel(private val userRepository: UserRepository): ViewModel() {
             userRepository.addHistory(scanEntity)
         }
     }
+
+    fun clearViewModel() {
+        _scanResponse.value = ScanResponse()
+    }
 }
